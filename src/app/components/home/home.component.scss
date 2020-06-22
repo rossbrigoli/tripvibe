@@ -1,0 +1,75 @@
+.search-bg {
+    background-image: url("../../../assets/images/background.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+    padding: 0px;
+    background-size: cover;
+}
+
+.search-head {
+    height: 25vh;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.no-top-margin {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.cn-narrow-side {
+    width: 100%;
+}
+
+.no-margin {
+    margin: 0;
+    padding: 0;
+}
+
+.description-font {
+    font-size: 12px;
+}
+
+.transport_mode_icon {
+    font-size: 30px !Important;
+}
+
+.darken-overlay div{
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .darken-pseudo {
+    position: relative;
+  }
+  
+  .darken-pseudo:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .search-box {
+      //display: flex;
+      margin-top: -70px;
+      position: absolute;
+      //align-self: center;
+  }
+
+ul.collection {
+    max-height: 500px;
+    overflow: scroll;
+  }
+  
+  li.collection-item:first-child {
+    background-color: #ee6e73;
+    color: white;
+  }

@@ -1,0 +1,11 @@
+{
+    "/api": {
+      "target": "http://sc-routes-mike-routes.apps.r2r.vic.apac.rht-labs.com/api",
+      "secure": true,
+      "pathRewrite": {
+      "^/api": ""
+    },
+      "changeOrigin": true
+    }
+  }
+  
