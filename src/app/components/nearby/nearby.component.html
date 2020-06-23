@@ -1,31 +1,57 @@
     <!-- nearby -->
-    <div class="row no-bottom-margin">
-        <ul class="collection no-top-margin">
+    <div class="row no-bottom-margin" style="height: 40vh;">
+
+        <div *ngIf="!loaded">
+            <ul class="collection no-top-margin">
+                <li class="collection-item">
+                      <span class="title"><h6>Nearby Public Transports</h6></span>
+                </li>
+            </ul>
+            
+            <div class="center">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="collection no-top-margin" *ngIf="loaded">
           <li class="collection-item">
-            <span class="title"><h6>Nearby Public Transports</h6></span>
+                <span class="title"><h6>Nearby Public Transports</h6></span>
           </li>
-          <li class="collection-item avatar">
+
+          <li class="collection-item avatar" *ngFor="let departure of departures">
             <div class="row no-bottom-margin">
-              <div class="col s8 no-margin">
-                <i class="material-icons circle orange transport_mode_icon">directions_bus</i>
-                <span class="title">123 Route Name</span>
-                <p class="description-font">Name of the Direction/Heading
+              <div class="col s9 no-margin">
+                <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
+                <span class="title">{{departure.number}} {{departure.stopName}}</span>
+                <p class="description-font">{{departure.direction}}
                   <br>
-                  Bus
+                  {{departure.type}}
                 </p>
               </div>
-              <div class="s4">
+              <div class="s3">
                 <span class="badge" data-badge-caption="min">4</span>
                 <br>
                 <span class="badge"><i class="material-icons">people</i></span>
               </div>
             </div>
           </li>
+<!-- 
+
           <li class="collection-item avatar">
             <div class="row no-bottom-margin">
               <div class="col s8 no-margin">
                 <i class="material-icons circle green transport_mode_icon">tram</i>
-                <span class="title">123 Route Name</span>
+                <span class="title">123 Stop Name</span>
                 <p class="description-font">Name of the Direction/Heading
                   <br>
                   Tram
@@ -42,7 +68,7 @@
             <div class="row no-bottom-margin">
               <div class="col s8 no-margin">
                 <i class="material-icons circle purple transport_mode_icon">directions_transit</i>
-                <span class="title">123 Route Name</span>
+                <span class="title">123 Stop Name</span>
                 <p class="description-font">Name of the Direction/Heading
                   <br>
                   Train
@@ -54,6 +80,6 @@
                 <span class="badge"><i class="material-icons">people</i></span>
               </div>
             </div>
-          </li>
+          </li> -->
         </ul>
       </div>
