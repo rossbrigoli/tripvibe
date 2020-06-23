@@ -2,6 +2,8 @@ FROM node:10-alpine as builder
 
 ARG NG_BUILD_ARGS=
 
+USER root
+
 COPY package.json package-lock.json ./
 
 RUN npm install && mkdir /app-ui && mv ./node_modules ./app-ui
@@ -16,7 +18,7 @@ RUN npm run ng build $NG_BUILD_ARGS
 FROM nginx:alpine
 
 #!/bin/sh
-
+USER root
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 ## Remove default nginx index page
