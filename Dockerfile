@@ -1,31 +1,24 @@
-FROM node:10-alpine as builder
+FROM node:lts-alpine AS build
 
-ARG NG_BUILD_ARGS=
+ARG NG_BUILD_ARG
 
-USER root
+WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-RUN npm install && mkdir /app-ui && mv ./node_modules ./app-ui
+RUN npm install -g @angular/cli
 
-WORKDIR /app-ui
+RUN npm install
 
 COPY . .
 
-RUN npm run ng build $NG_BUILD_ARGS
+RUN ng build ${NG_BUILD_ARG}
 
+### STAGE 2: Run ###
+FROM nginxinc/nginx-unprivileged
 
-FROM nginx:alpine
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-#!/bin/sh
-USER root
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app-ui/dist /usr/share/nginx/html
-
-EXPOSE 4200 80
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
