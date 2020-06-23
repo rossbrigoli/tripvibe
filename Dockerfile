@@ -1,5 +1,7 @@
 FROM node:10-alpine as builder
 
+ARG NG_BUILD_ARGS=
+
 COPY package.json package-lock.json ./
 
 RUN npm install && mkdir /app-ui && mv ./node_modules ./app-ui
@@ -8,7 +10,7 @@ WORKDIR /app-ui
 
 COPY . .
 
-RUN npm run ng build -- --deploy-url=/ --prod
+RUN npm run ng build $NG_BUILD_ARGS
 
 
 FROM nginx:alpine
