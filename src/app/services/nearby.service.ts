@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GeolocationService } from './geolocation.service';
-import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class NearbyService {
 
-  private REST_API_SERVER = "/api/search/routes/{latlong}/200";
+  private REST_API_SERVER = environment.nearbyApiURL;
 
   constructor(private httpClient: HttpClient, private geoService : GeolocationService) { }
 
@@ -24,8 +25,8 @@ export class NearbyService {
         console.log(lat + "," + lng);    
 
         //Override location for testing outside of melbourne
-        //lat = -37.8183886;
-        //lng = 144.9524854;
+        lat = -37.8183886;
+        lng = 144.9524854;
 
         response = this.httpClient.get(this.REST_API_SERVER.replace("{latlong}", lat + "," + lng))
       });
