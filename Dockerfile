@@ -18,10 +18,11 @@ RUN npm install
 RUN ng build
 
 RUN chmod 775 /build
+RUN chmod 777 /usr/share/nginx/html
 
 USER nginx
 
-RUN cp /build/dist/tripvibe /usr/share/nginx/html
+RUN cp /build/dist/tripvibe/. /usr/share/nginx/html/
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
