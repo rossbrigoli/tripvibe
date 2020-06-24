@@ -1,4 +1,4 @@
-FROM nginxinc/nginx-unprivileged 
+FROM nginx:1.19-alpine as build
 
 USER root
 # Install nvm with node and npm
@@ -16,12 +16,9 @@ WORKDIR /build
 RUN npm install
 RUN ng build
 
-RUN chmod 775 /build
-RUN chmod 777 /usr/share/nginx/html
+FROM nginxinc/nginx-unprivileged
 
-USER nginx
-
-RUN cp -r /build/dist/tripvibe/. /usr/share/nginx/html/
+COPY  --from=build /build/dist/tripvibe /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
