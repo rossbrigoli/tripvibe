@@ -7,7 +7,7 @@ import * as M from "materialize-css/dist/js/materialize";
 import { HomeComponent } from './components/home/home.component';
 import { NearbyComponent } from './components/nearby/nearby.component';
 import { AboutComponent } from './components/about/about.component';
-import { CrowdednessIndicatorComponent } from './components/nearby/crowdedness-indicator/crowdedness-indicator.component';
+import { CrowdednessIndicatorComponent } from './components/crowdedness-indicator/crowdedness-indicator.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
