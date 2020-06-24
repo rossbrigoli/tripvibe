@@ -2,12 +2,12 @@
     background-image: url("../../../assets/images/background.jpg");
     background-repeat: no-repeat;
     height: 100%;
-    padding: 0px;
+    padding: 10px;
     background-size: cover;
 }
 
 .search-head {
-    height: 25vh;
+    height: 30vh;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -38,8 +38,8 @@
     font-size: 30px !Important;
 }
 
-.darken-overlay div{
-    background-color: rgba(0, 0, 0, 0.8);
+.darken-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .darken-pseudo {
@@ -62,14 +62,4 @@
       margin-top: -70px;
       position: absolute;
       //align-self: center;
-  }
-
-ul.collection {
-    max-height: 500px;
-    overflow: scroll;
-  }
-  
-  li.collection-item:first-child {
-    background-color: #ee6e73;
-    color: white;
   }
