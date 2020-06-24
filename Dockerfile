@@ -1,5 +1,4 @@
 FROM nginx:1.19-alpine
-LABEL maintainer="Xin Hu <hoosin.git@gmail.com>"
 
 USER root
 # Install nvm with node and npm
@@ -22,7 +21,7 @@ RUN chmod 777 /usr/share/nginx/html
 
 USER nginx
 
-RUN cp /build/dist/tripvibe/. /usr/share/nginx/html/
+RUN cp -r /build/dist/tripvibe/. /usr/share/nginx/html/
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
