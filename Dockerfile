@@ -14,7 +14,7 @@ COPY . /build
 WORKDIR /build
 
 RUN npm install
-RUN ng build
+RUN ng build --prod
 
 FROM nginxinc/nginx-unprivileged
 
