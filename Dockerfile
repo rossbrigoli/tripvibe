@@ -21,7 +21,7 @@ RUN chmod 775 /build
 
 USER nginx
 
-COPY /build/dist /usr/share/nginx/html
+RUN cp /build/dist/tripvibe /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
