@@ -1,11 +1,9 @@
-<ng-container *ngFor="let filledIcon of filledIcons">
-  <svg class="margins" width="20px" height="17px" viewBox="0 0 20 17">
-    <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-  </svg>
-</ng-container>
+<div class="nowrap">
+    <svg *ngFor="let filledIcon of filledIcons" class="filled margins" width="15px" height="17px" viewBox="0 0 10 15">
+      <path fill-rule="evenodd" d="M0 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>
 
-<ng-container class="margins" *ngFor="let unfilledIcon of unfilledIcons">
-  <svg class="fill margins" width="20px" height="17px" viewBox="0 0 20 17">
-    <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-  </svg>
-</ng-container>
+    <svg *ngFor="let unfilledIcon of unfilledIcons" class="unfilled margins" width="15px" height="17px" viewBox="0 0 10 15">
+      <path fill-rule="evenodd" d="M0 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>
+</div>

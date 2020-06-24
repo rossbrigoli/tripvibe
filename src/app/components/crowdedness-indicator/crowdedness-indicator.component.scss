@@ -1,7 +1,16 @@
-.fill {
+.unfilled {
     fill: lightgray;
 }
 
+.filled {
+    fill: darkslategray;
+}
+
 .margins{
-    margin-right: -5px;
+    margin: 0;
+    padding: 0;
   }
+
+.nowrap {
+    white-space: nowrap;
+}
