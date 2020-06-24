@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { GeolocationService } from './geolocation.service';
 import { environment } from '../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root'
 })

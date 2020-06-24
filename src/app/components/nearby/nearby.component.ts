@@ -18,8 +18,8 @@ export class NearbyComponent implements OnInit {
   ngOnInit(): void {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
-        console.log(deps[0]);
-        this.departures = deps[0];
+        console.log(deps);
+        this.departures = deps;
         this.loaded = true;
       } );
     } );
