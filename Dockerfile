@@ -1,24 +1,25 @@
-FROM node:lts-alpine AS build
+FROM nginx:1.19-alpine
+LABEL maintainer="Xin Hu <hoosin.git@gmail.com>"
 
-ARG NG_BUILD_ARG
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
+USER root
+# Install nvm with node and npm
+RUN apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/main libuv \
+    && apk add --no-cache --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main nodejs=10.16.0-r0 nodejs-npm=10.16.0-r0 \
+    && echo "NodeJS Version:" "$(node -v)" \
+    && echo "NPM Version:" "$(npm -v)"
 
 RUN npm install -g @angular/cli
 
+USER nginx
+
+RUN mkdir /build
+COPY . /build
+WORKDIR /build
+
 RUN npm install
+RUN ng build
 
-COPY . .
+COPY /build/dist /usr/share/nginx/html
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
-RUN ng build ${NG_BUILD_ARG}
-
-### STAGE 2: Run ###
-FROM nginxinc/nginx-unprivileged
-
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
