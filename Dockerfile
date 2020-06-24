@@ -15,10 +15,11 @@ COPY . .
 RUN ng build ${NG_BUILD_ARG}
 
 ### STAGE 2: Run ###
-FROM nginxinc/nginx-unprivileged
+FROM nginx:1.16
 
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/opt/rh/rh-nginx114/nginx/nginx.conf
 
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+#COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist /opt/app-root
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
