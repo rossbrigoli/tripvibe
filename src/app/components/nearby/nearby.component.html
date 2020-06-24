@@ -41,7 +41,12 @@
               <div class="s3">
                 <span class="badge" data-badge-caption="min">4</span>
                 <br>
-                <span class="badge"><i class="material-icons">people</i></span>
+                <!-- <span class="badge"><i class="material-icons">people</i></span> -->
+                <ng-container>
+                  <app-crowdedness-indicator [capacity]="departure.number"></app-crowdedness-indicator>
+                </ng-container>
+                
+                
               </div>
             </div>
           </li>
