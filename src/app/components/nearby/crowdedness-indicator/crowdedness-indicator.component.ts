@@ -10,15 +10,14 @@ export class CrowdednessIndicatorComponent implements OnInit {
   constructor() { }
 
   @Input() capacity: number
-  filledStars = [];
-  unfilledStars = [];
+  filledIcons = [];
+  unfilledIcons = [];
 
   ngOnInit(): void {  
     // const stars = Math.ceil(this.capacity / 20)
     // Temporary workaround while percentages aren't returned
-    const stars = Math.ceil(Math.min(this.capacity, 100) / 20)
-    this.filledStars = new Array(stars)
-    this.unfilledStars = new Array(5 - stars)
-    
+    const icons = Math.ceil(Math.min(this.capacity, 100) / 25)
+    this.filledIcons = new Array(icons)
+    this.unfilledIcons = new Array(4 - icons)
   }
 }
