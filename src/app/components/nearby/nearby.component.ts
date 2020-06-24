@@ -18,7 +18,7 @@ export class NearbyComponent implements OnInit {
   ngOnInit(): void {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
-        console.log(deps);
+        //console.log(deps);
         this.departures = deps;
         this.loaded = true;
       } );
@@ -43,6 +43,19 @@ export class NearbyComponent implements OnInit {
       return "green";
     else if (type.toLowerCase() === "train" || type.toLowerCase() == "vline")
       return "purple";
+  }
+
+  refresh(){
+    this.loaded = false;
+    this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
+      data.subscribe((deps) => {
+        //console.log(deps);
+        this.departures = deps;
+        this.loaded = true;
+      } );
+    } );
+
+    console.log(this.departures);
   }
 
 }
