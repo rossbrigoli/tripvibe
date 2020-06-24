@@ -1,4 +1,4 @@
-FROM nginx:1.19-alpine
+FROM nginxinc/nginx-unprivileged 
 
 USER root
 # Install nvm with node and npm
