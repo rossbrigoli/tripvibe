@@ -10,14 +10,16 @@ RUN apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/main l
 
 RUN npm install -g @angular/cli
 
-USER nginx
-
 RUN mkdir /build
 COPY . /build
 WORKDIR /build
 
 RUN npm install
 RUN ng build
+
+RUN chmod 775 /build
+
+USER nginx
 
 COPY /build/dist /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
