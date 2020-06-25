@@ -11,6 +11,7 @@ import { CrowdednessIndicatorComponent } from './components/crowdedness-indicato
 
 import { HttpClientModule } from '@angular/common/http';
 import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicator.component';
+import { DataEntryComponent } from './components/data-entry/data-entry.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicat
     NearbyComponent,
     AboutComponent,
     CrowdednessIndicatorComponent,
-    VibeIndicatorComponent
+    VibeIndicatorComponent,
+    DataEntryComponent
   ],
   imports: [
     BrowserModule,
