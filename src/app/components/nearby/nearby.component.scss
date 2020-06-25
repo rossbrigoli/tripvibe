@@ -61,12 +61,24 @@ ul.collection {
     overflow: scroll;
   }
   
-  li.collection-item:first-child {
-    background-color: #e57373;
-    color: white;
-  }
+  // li.collection-item:first-child {
+  //   background-color: #e57373;
+  //   color: white;
+  // }
 
   .icon-big-white {
       color:whitesmoke;
       font-size: 24px;
+  }
+
+  .list-header {
+    background-color: #e57373;
+    color: white;
+  }
+
+  .list-preload {
+    height: 30vh;
+    width: 100%;
+    position: relative;
+    vertical-align: middle;
   }
