@@ -46,7 +46,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            env.TARGET_NAMESPACE = "mike-tripvibe"
+                            env.TARGET_NAMESPACE = "labs-dev"
                             env.STAGING_NAMESPACE = "labs-staging"
                             env.APP_NAME = "${NAME}".replace("/", "-").toLowerCase()
                         }
@@ -80,7 +80,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            env.TARGET_NAMESPACE = "mike-tripvibe"
+                            env.TARGET_NAMESPACE = "labs-dev"
                             env.APP_NAME = "${GIT_BRANCH}-${NAME}".replace("/", "-").toLowerCase()
                         }
                     }
@@ -134,11 +134,15 @@ pipeline {
                        fi
                        echo " 🏗 found pod waiting for deployment 🏗"
                        oc -n ${TARGET_NAMESPACE} wait dc -l app=${APP_NAME} --for=condition=Available --timeout=300s
-                        
+
                        oc -n ${TARGET_NAMESPACE} get route ${APP_NAME} || rc=$?
                        if [ $rc -eq 1 ]; then
                            oc -n ${TARGET_NAMESPACE} expose svc/${APP_NAME}
                            oc -n ${TARGET_NAMESPACE} patch route/${APP_NAME} --type=json -p '[{"op":"add", "path":"/spec/tls", "value":{"termination":"edge","insecureEdgeTerminationPolicy":"Redirect"}}]'
+                       fi
+                       oc -n ${TARGET_NAMESPACE} get route ${APP_NAME}-sc-routes || rc=$?
+                       if [ $rc -eq 1 ]; then
+                           oc n ${TARGET_NAMESPACE} create route edge tripvibe-sc-routes --service=sc-routes --port=8080 --hostname=$(oc get route ${APP_NAME} -o custom-columns=ROUTE:.spec.host --no-headers) --path=/api
                        fi
                     '''
                 }
