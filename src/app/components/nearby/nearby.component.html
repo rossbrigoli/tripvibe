@@ -29,7 +29,7 @@
         <ul class="collection no-top-margin" *ngIf="loaded">
           <li class="collection-item avatar" *ngFor="let departure of departures">
             <div class="row no-bottom-margin">
-              <div class="col s9 m10 l10 no-margin">
+              <div class="col s9 m10 l10">
                 <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
                 <span class="title">{{departure.number}} </span><span>{{departure.stopName}}</span>
                 <p class="description-font">{{departure.direction}}
