@@ -2,7 +2,7 @@
     <div class="row no-bottom-margin">
       <div class="col s12 m12 l12 list-header">
         <div class="row no-bottom-margin">
-          <div class="col s10 m11 l11"><span class="title"><h6>Options nearby</h6></span></div>
+          <div class="col s10 m11 l11"><span class="title"><h6>Options Nearby</h6></span></div>
           <div class="col s2 m1 l1"><a class="btn-flat" (click)="refresh()"><i class="material-icons icon-big-white">cached</i></a></div>
         </div>
       </div>
@@ -34,7 +34,7 @@
                 <span class="title">{{departure.number}} </span><span>{{departure.stopName}}</span>
                 <p class="description-font">{{departure.direction}}
                   <br>
-                  {{departure.type}} | {{getETA(departure.departureTime)}} min
+                  {{departure.type}} departing in <span class="time-text">{{getETA(departure.departureTime)}} min</span>
                 </p>
               </div>
               <div class="col s3 m2 l2">

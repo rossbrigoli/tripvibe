@@ -52,7 +52,7 @@ export class NearbyComponent implements OnInit {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
-        this.departures = deps;
+        this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
         this.loaded = true;
       } );
     } );
