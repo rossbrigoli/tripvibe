@@ -1,10 +1,15 @@
     <!-- nearby -->
-    <div class="row no-bottom-margin" style="height: 40vh;">
-        <div class="container list-header col s12 m12 l12">
-          <div class="col s10"><span class="title"><h6>Nearby Public Transports</h6></span></div>
-          <div class="col s2"><a class="btn-flat" (click)="refresh()"><i class="material-icons icon-big-white">cached</i></a></div>
+    <div class="row no-bottom-margin">
+      <div class="col s12 m12 l12 list-header">
+        <div class="row no-bottom-margin">
+          <div class="col s10 m11 l11"><span class="title"><h6>Nearby Public Transports</h6></span></div>
+          <div class="col s2 m1 l1"><a class="btn-flat" (click)="refresh()"><i class="material-icons icon-big-white">cached</i></a></div>
         </div>
-        <div class="center list-preload" *ngIf="!loaded">
+      </div>
+    </div>
+    <div class="row no-bottom-margin">
+      <div class="col s12 m12 l12">
+        <div class="container center middle list-preload" *ngIf="!loaded">
           <div class="preloader-wrapper big active">
               <div class="spinner-layer spinner-green-only">
               <div class="circle-clipper left">
@@ -16,11 +21,15 @@
               </div>
               </div>
           </div>
+        </div>
       </div>
+    </div>
+    <div class="row no-bottom-margin" style="height: 40vh;">
+      <div class="col s12 m12 l12 no-margin">
         <ul class="collection no-top-margin" *ngIf="loaded">
           <li class="collection-item avatar" *ngFor="let departure of departures">
             <div class="row no-bottom-margin">
-              <div class="col s8 no-margin">
+              <div class="col s9 m10 l10 no-margin">
                 <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
                 <span class="title">{{departure.number}} </span><span>{{departure.stopName}}</span>
                 <p class="description-font">{{departure.direction}}
@@ -28,18 +37,12 @@
                   {{departure.type}} | {{getETA(departure.departureTime)}} min
                 </p>
               </div>
-              <div class="col s4 ">
-                <div class="row top-margin">
-                  <!-- <div class="col s12 valign-wrapper center-align">
-                    <span class="badge" data-badge-caption="min">{{getETA(departure.departureTime)}}</span>
-                  </div> -->
-                  <div class="col s12 valign-wrapper center-align">
-                    <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
-                  </div>
-                </div>
+              <div class="col s3 m2 l2">
+                <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
+                <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
               </div>
-              <br>
             </div>
           </li>
         </ul>
       </div>
+    </div>

@@ -10,6 +10,7 @@ import { AboutComponent } from './components/about/about.component';
 import { CrowdednessIndicatorComponent } from './components/crowdedness-indicator/crowdedness-indicator.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicator.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     NearbyComponent,
     AboutComponent,
-    CrowdednessIndicatorComponent
+    CrowdednessIndicatorComponent,
+    VibeIndicatorComponent
   ],
   imports: [
     BrowserModule,
