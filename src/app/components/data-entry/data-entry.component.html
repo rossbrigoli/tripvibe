@@ -11,18 +11,18 @@
             <label>Mode of Transport</label>
             <select class="browser-default" ngModel name="transport">
                 <option value="" disabled selected>Choose your option</option>
-                <option value="1">Train</option>
-                <option value="2">Tram</option>
-                <option value="3">Bus</option>
-                <option value="4">Vline</option>
-                <option value="5">Night Bus</option>
+                <option value="Train">Train</option>
+                <option value="Tram">Tram</option>
+                <option value="Bus">Bus</option>
+                <option value="Vline">Vline</option>
+                <option value="Night Bus">Night Bus</option>
             </select>
         </div>
         <div class="row">
             <label>Near By Stop / Station</label>
             <select class="browser-default" ngModel name="stop">
                 <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let departure of departures" value="departure.name">{{ departure.name }}</option>
+                <option *ngFor="let departure of departures" [value]="departure.name">{{ departure.name }}</option>
             </select>
         </div>
         <div class="row">
@@ -30,7 +30,7 @@
             <select class="browser-default" ngModel name="number">
                 <option value="" disabled selected>Choose your option</option>
                 <ng-container *ngFor="let departure of departures">
-                        <option value="departure.number">{{ departure.number }}</option>
+                        <option [value]="departure.number">{{ departure.number }}</option>
                 </ng-container>
             </select>
         </div>
