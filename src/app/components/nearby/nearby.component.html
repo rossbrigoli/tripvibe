@@ -31,13 +31,13 @@
             <div class="row no-bottom-margin">
               <div class="col s9 m10 l10">
                 <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
-                <span class="title">{{departure.number}} </span><span>{{departure.stopName}}</span>
+                <span class="title no-wrap">{{departure.number}} </span><span>{{departure.stopName.length > 25 ? departure.stopName.substring(0,25) + "..." : departure.stopName}}</span>
                 <p class="description-font">{{departure.direction}}
                   <br>
                   {{departure.type}} departing in <span class="time-text">{{getETA(departure.departureTime)}} min</span>
                 </p>
               </div>
-              <div class="col s3 m2 l2">
+              <div class="col s3 m2 l2 no-margin center">
                 <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
                 <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
               </div>
