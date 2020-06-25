@@ -7,6 +7,9 @@ RUN apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/main l
     && echo "NodeJS Version:" "$(node -v)" \
     && echo "NPM Version:" "$(npm -v)"
 
+ARG NPM_MIRROR_REGISTRY
+RUN npm config set registry ${NPM_MIRROR_REGISTRY}
+
 RUN npm install -g @angular/cli
 
 RUN mkdir /build

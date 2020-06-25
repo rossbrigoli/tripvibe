@@ -23,7 +23,8 @@ pipeline {
 
         // Nexus Artifact repo
         NEXUS_REPO_NAME="labs-static"
-        NEXUS_REPO_HELM = "helm-charts"
+        NEXUS_REPO_HELM="helm-charts"
+        NPM_MIRROR_REGISTRY="http://sonatype-nexus-service.labs-ci-cd.svc.cluster.local:8081/repository/labs-npm"
     }
 
     options {
@@ -103,13 +104,13 @@ pipeline {
                             oc get bc ${APP_NAME} || rc=$?
                             if [ $rc -eq 1 ]; then
                                 echo " 🏗 no build - creating one 🏗"
-                                oc new-build --binary --name=${APP_NAME} -l app=${APP_NAME} --strategy=docker --dry-run -o yaml > /tmp/bc.yaml
+                                oc new-build --binary --name=${APP_NAME} -l app=${APP_NAME} --strategy=docker --build-arg=NPM_MIRROR_REGISTRY=${NPM_MIRROR_REGISTRY} --dry-run -o yaml > /tmp/bc.yaml
                                 yq w -i /tmp/bc.yaml items[1].spec.strategy.dockerStrategy.dockerfilePath Dockerfile
                                 oc apply -f /tmp/bc.yaml
                                 oc patch bc/${APP_NAME} -p '{"spec":{ "runPolicy": "Parallel"}}' --type=strategic
                             fi
                             echo " 🏗 build found - starting it  🏗"
-                            oc start-build ${APP_NAME} --from-dir=. --follow                                                        
+                            oc start-build ${APP_NAME} --from-dir=. --follow --build-arg=NPM_MIRROR_REGISTRY=${NPM_MIRROR_REGISTRY}
                             '''
                         }
                     }
