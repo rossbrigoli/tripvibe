@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NearbyService } from '../../services/nearby.service';
 import { Observable } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-data-entry',
@@ -12,7 +13,7 @@ export class DataEntryComponent implements OnInit {
   constructor(private nearbyService : NearbyService) { }
 
   departures = [];
-
+ 
   ngOnInit(): void {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
@@ -21,4 +22,9 @@ export class DataEntryComponent implements OnInit {
       } );
     } );
   }
+
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+  }
+
 }
