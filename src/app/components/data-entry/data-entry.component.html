@@ -23,21 +23,19 @@
             <label>Near By Stop / Station</label>
             <select class="browser-default">
                 <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                <option *ngFor="let departure of departures" value="departure.name">{{ departure.name }}</option>
             </select>
         </div>
         <div class="row">
             <label>Route / Bus Number / Tram Number</label>
             <select class="browser-default">
                 <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                <ng-container *ngFor="let departure of departures">
+                        <option value="departure.number">{{ departure.number }}</option>
+                </ng-container>
             </select>
         </div>
-        <div class="row ">
+        <div class="row">
             <div class="col s12 ">
                 <label>How crowded is it?</label>
                 <p class="range-field ">

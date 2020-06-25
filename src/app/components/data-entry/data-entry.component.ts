@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NearbyService } from '../../services/nearby.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-entry',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataEntryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private nearbyService : NearbyService) { }
+
+  departures = [];
 
   ngOnInit(): void {
+    this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
+      data.subscribe((deps) => {
+        console.log(deps);
+        this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
+      } );
+    } );
   }
-
 }
