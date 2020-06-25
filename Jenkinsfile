@@ -80,7 +80,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            env.TARGET_NAMESPACE = "labs-dev"
+                            env.TARGET_NAMESPACE = "mike-tripvibe"
                             env.APP_NAME = "${GIT_BRANCH}-${NAME}".replace("/", "-").toLowerCase()
                         }
                     }
@@ -93,7 +93,7 @@ pipeline {
                 stage("Build App") {
                     agent {
                         node {
-                            label "master"
+                            label "jenkins-slave-mvn"
                         }
                     }
                     steps {
