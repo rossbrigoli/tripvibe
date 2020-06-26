@@ -19,10 +19,10 @@
             </select>
         </div>
         <div class="row">
-            <label>Near By Stop / Station</label>
+            <label>Nearby Stop / Station</label>
             <select class="browser-default" [(ngModel)]="stop_name">
                 <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let departure of departures" [value]="departure.name">{{ departure.name }}</option>
+                <option *ngFor="let stop of stopNames" [value]="stop">{{ stop }}</option>
             </select>
         </div>
         <div class="row">

@@ -4,6 +4,7 @@ import { DataEntryService } from '../../services/data-entry.service';
 import { Observable } from 'rxjs';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Location } from '@angular/common';
+import { element } from 'protractor';
 @Component({
   selector: 'app-data-entry',
   templateUrl: './data-entry.component.html',
@@ -73,17 +74,21 @@ export class DataEntryComponent implements OnInit {
   stop_name: string;
   vibe: number;
 
-  isRouteNumberVisible = false;
 
   onRouteTypeChange() {
-    if (this.route_type === "Tram" || this.route_type === "Bus") {
-      this.isRouteNumberVisible = true;
-    } else {
-      this.isRouteNumberVisible = false;
-    }
+    
+    this.stopNames = this.departures.filter(dep => dep.type === this.route_type).map(c => c.stopName);
+    if (this.stopNames.length === 0) this.stopNames.push("No " + this.route_type + " in your location.");
+    
+    this.routeNames = this.departures.filter(dep => dep.type === this.route_type).map(c => c.number + " - " + c.name);
+    console.log("Refreshed stops " + this.stopNames );
   }
 
   submitStatusMessage = "";
+
+  stopNames : string[] = [];
+
+  routeNames : string[] = []
   /*
 {
   "location_lat": -27.502,
