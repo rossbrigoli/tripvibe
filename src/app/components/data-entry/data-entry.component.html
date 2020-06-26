@@ -20,17 +20,26 @@
         </div>
         <div class="row">
             <label>Nearby Stop / Station</label>
-            <select class="browser-default" [(ngModel)]="stop_name">
+            <select class="browser-default" [(ngModel)]="stop_name" (change)="onStopChange()">
                 <option value="" disabled selected>Choose your option</option>
                 <option *ngFor="let stop of stopNames" [value]="stop">{{ stop }}</option>
             </select>
         </div>
         <div class="row">
             <label>Bus Number / Tram Number</label>
-            <select class="browser-default" [(ngModel)]="route_number">
+            <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
                 <option value="" disabled selected>Choose your option</option>
-                <ng-container *ngFor="let departure of departures">
-                        <option [value]="departure.number">{{ departure.number }}</option>
+                <ng-container *ngFor="let name of routeNames">
+                        <option [value]="name[2]">{{ name[1].toString() === "" ? name[2] : name[1] + " - " + name[2] }}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="row">
+            <label>Direction</label>
+            <select class="browser-default" [(ngModel)]="route_direction">
+                <option value="" disabled selected>Choose your option</option>
+                <ng-container *ngFor="let name of direction_names">
+                        <option [value]="name">{{ name }}</option>
                 </ng-container>
             </select>
         </div>

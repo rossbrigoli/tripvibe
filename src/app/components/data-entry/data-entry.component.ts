@@ -4,7 +4,7 @@ import { DataEntryService } from '../../services/data-entry.service';
 import { Observable } from 'rxjs';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Location } from '@angular/common';
-import { element } from 'protractor';
+
 @Component({
   selector: 'app-data-entry',
   templateUrl: './data-entry.component.html',
@@ -17,10 +17,18 @@ export class DataEntryComponent implements OnInit {
   departures = [];
  
   ngOnInit(): void {
+    this.refreshData();
+  }
+
+  loaded = false;
+  refreshData() {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
         this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
+        this.refreshStopNames();
+        this.refreshRouteNames();
+        this.refreshDirectionNames();
       } );
     } );
   }
@@ -73,22 +81,57 @@ export class DataEntryComponent implements OnInit {
   route_type: string;
   stop_name: string;
   vibe: number;
+  route_name: string;
 
+  refreshStopNames() {
+    //Don't display tram tops when user selects Bus as mode of transport
+    this.stopNames = this.departures
+      .filter(dep => dep.type === this.route_type) //filter by selected route type
+      .map(c => c.stopName)
+      .filter((thing, i, arr) => arr.findIndex(t => t === thing) === i); //get distinct values
+    if (this.stopNames.length === 0) this.stopNames.push("No " + this.route_type + " in your location.");
+  }
+
+  refreshRouteNames() {
+    //Show only tram lines if user selects tram as mode of transport but also show only route using that selected stop
+    this.routeNames = this.departures
+      .filter(dep => dep.type === this.route_type && dep.stopName === this.stop_name) //filter by selected route type and stop name
+      .filter((thing, i, arr) => arr.findIndex(t => t.name === thing.name) == i) //filter distinct value
+      .map(c => [0, c.number, c.name ]);
+
+    if (this.routeNames.length === 0) this.routeNames.push([0, "Oops", "No routes in your location."]);
+  }
+
+  refreshDirectionNames() {
+    this.direction_names = this.departures
+    .filter(dep => dep.type === this.route_type && dep.stopName === this.stop_name && dep.name === this.route_name) //filter by selected route type and stop name
+    .map(c => c.direction)
+    .filter((thing, i, arr) => arr.findIndex(t => t === thing) == i);
+
+    //console.log("route name" + this.route_name + " -- " +this.route_number);
+    //console.log("Refreshed directions " + this.direction_names );
+  }
 
   onRouteTypeChange() {
-    
-    this.stopNames = this.departures.filter(dep => dep.type === this.route_type).map(c => c.stopName);
-    if (this.stopNames.length === 0) this.stopNames.push("No " + this.route_type + " in your location.");
-    
-    this.routeNames = this.departures.filter(dep => dep.type === this.route_type).map(c => c.number + " - " + c.name);
-    console.log("Refreshed stops " + this.stopNames );
+    this.refreshStopNames();
+    this.refreshRouteNames();
+    this.refreshDirectionNames();
+  }
+  
+  onStopChange() {
+    this.refreshRouteNames();
+    this.refreshDirectionNames();
+  }
+
+  onRouteChange(){
+    this.refreshDirectionNames();
   }
 
   submitStatusMessage = "";
-
   stopNames : string[] = [];
+  routeNames : [number, string, string][] = []
+  direction_names : string[]
 
-  routeNames : string[] = []
   /*
 {
   "location_lat": -27.502,
