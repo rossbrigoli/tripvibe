@@ -5,7 +5,24 @@
         </p>
     </div>
 </div>
-<div class="row">
+<div class="row no-bottom-margin" *ngIf="!loaded">
+    <div class="col s12 m12 l12">
+      <div class="container center middle list-preload" *ngIf="!loaded">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="row" *ngIf="loaded">
     <div class="container">
         <div class="row">
             <label>Mode of Transport</label>

@@ -29,6 +29,7 @@ export class DataEntryComponent implements OnInit {
         this.refreshStopNames();
         this.refreshRouteNames();
         this.refreshDirectionNames();
+        this.loaded = true;
       } );
     } );
   }
