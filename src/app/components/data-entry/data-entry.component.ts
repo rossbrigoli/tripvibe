@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NearbyService } from '../../services/nearby.service';
-import { DataEntryService } from '../../services/data-entry.service'
+import { DataEntryService } from '../../services/data-entry.service';
 import { Observable } from 'rxjs';
-import { GeolocationService } from '../../services/geolocation.service'
-
+import { GeolocationService } from '../../services/geolocation.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-data-entry',
   templateUrl: './data-entry.component.html',
@@ -11,7 +11,7 @@ import { GeolocationService } from '../../services/geolocation.service'
 })
 export class DataEntryComponent implements OnInit {
 
-  constructor(private nearbyService : NearbyService, private dataEntryService : DataEntryService, private geoService : GeolocationService) { }
+  constructor(private nearbyService : NearbyService, private dataEntryService : DataEntryService, private geoService : GeolocationService, private _loc :Location ) { }
 
   departures = [];
  
@@ -56,9 +56,13 @@ export class DataEntryComponent implements OnInit {
           }
         ).then(result => {
           result.subscribe(c => console.log(c));
+          this.submitStatusMessage = "Success";
         }).catch( err => {
           console.log("Failed" + err);
-        });
+          this.submitStatusMessage = "Failed";
+        }).finally(() => {
+          setTimeout(() => this._loc.back(), 1500);
+        })
       });
   }
 
@@ -69,6 +73,17 @@ export class DataEntryComponent implements OnInit {
   stop_name: string;
   vibe: number;
 
+  isRouteNumberVisible = false;
+
+  onRouteTypeChange() {
+    if (this.route_type === "Tram" || this.route_type === "Bus") {
+      this.isRouteNumberVisible = true;
+    } else {
+      this.isRouteNumberVisible = false;
+    }
+  }
+
+  submitStatusMessage = "";
   /*
 {
   "location_lat": -27.502,
