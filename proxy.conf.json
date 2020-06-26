@@ -4,7 +4,15 @@
       "secure": true,
       "pathRewrite": {
       "^/api": ""
+      },
+      "changeOrigin": true
     },
+    "/submission" : {
+      "target" : "https://sc-submit-labs-dev.apps.r2r.vic.apac.rht-labs.com/submission",
+      "secure": true,
+      "pathRewrite": {
+      "^/submission": ""
+      },
       "changeOrigin": true
     }
   }
