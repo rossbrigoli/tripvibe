@@ -13,6 +13,7 @@ import { CrowdednessIndicatorComponent } from './components/crowdedness-indicato
 import { HttpClientModule } from '@angular/common/http';
 import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicator.component';
 import { DataEntryComponent } from './components/data-entry/data-entry.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DataEntryComponent } from './components/data-entry/data-entry.component
     AboutComponent,
     CrowdednessIndicatorComponent,
     VibeIndicatorComponent,
-    DataEntryComponent
+    DataEntryComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

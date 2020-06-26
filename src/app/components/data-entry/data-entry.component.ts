@@ -4,6 +4,7 @@ import { DataEntryService } from '../../services/data-entry.service';
 import { Observable } from 'rxjs';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Location } from '@angular/common';
+declare var $: any;
 
 @Component({
   selector: 'app-data-entry',
@@ -67,11 +68,12 @@ export class DataEntryComponent implements OnInit {
         ).then(result => {
           result.subscribe(c => console.log(c));
           this.submitStatusMessage = "Success";
+          this.showFeedback();
         }).catch( err => {
           console.log("Failed" + err);
           this.submitStatusMessage = "Failed";
         }).finally(() => {
-          setTimeout(() => this._loc.back(), 1500);
+          setTimeout(() => this._loc.back(), 10000);
         })
       });
   }
@@ -133,22 +135,11 @@ export class DataEntryComponent implements OnInit {
   routeNames : [number, string, string][] = []
   direction_names : string[]
 
-  /*
-{
-  "location_lat": -27.502,
-  "location_lng": 152.897,
-  "sentiment": {
-    "capacity": 50,
-    "route_direction": "City",
-    "route_number": "216",
-    "route_type": "Bus",
-    "stop_name": "Sunshine Station - City via Dynon Rd",
-    "vibe": 67,
-    "departure_time": "2020-06-23T05:27:24.000Z"
-  },
-  "submitter": {
-    "device_id": "8316080933289526961"
+  showFeedback() {
+        //initialize all modals           
+        $('.modal').modal();
+
+        //now you can open modal from code
+        $('#modal1').modal('open');
   }
-}
-  */
 }
