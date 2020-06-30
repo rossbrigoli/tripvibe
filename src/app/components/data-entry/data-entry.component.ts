@@ -130,6 +130,10 @@ export class DataEntryComponent implements OnInit {
     this.refreshDirectionNames();
   }
 
+  onBack() {
+    this._loc.back()
+  }
+
   submitStatusMessage = "";
   stopNames : string[] = [];
   routeNames : [number, string, string][] = []

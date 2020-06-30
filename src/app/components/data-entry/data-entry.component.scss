@@ -14,3 +14,25 @@ button {
 .no-margin {
     margin: 0px;
 }
+
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  [type=radio] + svg {
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    margin-left: 5px;
+  }
+
+  [type=radio]:checked + svg {
+    outline: 2px solid #26a69a;
+  }
+
+  .move-right {
+    margin-left: 20px;
+  }
