@@ -24,42 +24,61 @@
   </div>
 <div class="row" *ngIf="loaded">
     <div class="container">
-        <div class="row">
-            <label>Mode of Transport</label>
-            <select class="browser-default" [(ngModel)]="route_type" (change)="onRouteTypeChange()">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="Train">Train</option>
-                <option value="Tram">Tram</option>
-                <option value="Bus">Bus</option>
-                <option value="Vline">Vline</option>
-                <option value="Night Bus">Night Bus</option>
-            </select>
+        <div *ngIf="autoFill; else noFill">
+            <div class="row">
+                <label>Mode of Transport</label>
+                <input type="text" [(ngModel)]="state.type" readonly>
+            </div>
+            <div class="row">
+                <label>Nearby Stop / Station</label>
+                <input type="text" [(ngModel)]="state.stopName" readonly>
+            </div>
+            <div class="row">
+                <label>Bus Number / Tram Number</label>
+                <input type="text" [(ngModel)]="state.number" readonly>
+            </div>
+            <div class="row">
+                <label>Direction</label>
+                <input type="text" [(ngModel)]="state.direction" readonly>
+            </div>
         </div>
-        <div class="row">
-            <label>Nearby Stop / Station</label>
-            <select class="browser-default" [(ngModel)]="stop_name" (change)="onStopChange()">
-                <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let stop of stopNames" [value]="stop">{{ stop }}</option>
-            </select>
-        </div>
-        <div class="row">
-            <label>Bus Number / Tram Number</label>
-            <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
-                <option value="" disabled selected>Choose your option</option>
-                <ng-container *ngFor="let name of routeNames">
-                        <option [value]="name[2]">{{ name[1].toString() === "" ? name[2] : name[1] + " - " + name[2] }}</option>
-                </ng-container>
-            </select>
-        </div>
-        <div class="row">
-            <label>Direction</label>
-            <select class="browser-default" [(ngModel)]="route_direction">
-                <option value="" disabled selected>Choose your option</option>
-                <ng-container *ngFor="let name of direction_names">
-                        <option [value]="name">{{ name }}</option>
-                </ng-container>
-            </select>
-        </div>
+        <ng-template #noFill>
+            <div class="row">
+                <label>Mode of Transport</label>
+                <select class="browser-default" [(ngModel)]="route_type" (change)="onRouteTypeChange()">
+                    <option value="Train">Train</option>
+                    <option value="Tram">Tram</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Vline">Vline</option>
+                    <option value="Night Bus">Night Bus</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>Nearby Stop / Station</label>
+                <select class="browser-default" [(ngModel)]="stop_name" (change)="onStopChange()">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option *ngFor="let stop of stopNames" [value]="stop">{{ stop }}</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>Bus Number / Tram Number</label>
+                <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
+                    <option value="" disabled selected>Choose your option</option>
+                    <ng-container *ngFor="let name of routeNames">
+                            <option [value]="name[2]">{{ name[1].toString() === "" ? name[2] : name[1] + " - " + name[2] }}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="row">
+                <label>Direction</label>
+                <select class="browser-default" [(ngModel)]="route_direction">
+                    <option value="" disabled selected>Choose your option</option>
+                    <ng-container *ngFor="let name of direction_names">
+                            <option [value]="name">{{ name }}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </ng-template>
         <div class="row">
             <div class="col s12">
                 <label>How crowded is it?</label>
@@ -141,7 +160,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal Structure -->
     <div id="modal1" class="modal bottom-sheet">
         <div class="modal-content">

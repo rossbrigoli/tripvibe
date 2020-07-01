@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NearbyService } from '../../services/nearby.service';
 import { Observable } from 'rxjs';
-import { variable } from '@angular/compiler/src/output/output_ast';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nearby',
@@ -11,7 +10,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 })
 export class NearbyComponent implements OnInit {
 
-  constructor(private nearbyService : NearbyService) { }
+  constructor(private nearbyService : NearbyService, public router: Router) { }
 
   departures = [];
   loaded = false;
@@ -56,7 +55,7 @@ export class NearbyComponent implements OnInit {
         this.loaded = true;
       } );
     } );
-    this.now = new Date();
+    this.now = new Date();2
   }
 
   getETA(depTime: string) : string {
@@ -65,4 +64,15 @@ export class NearbyComponent implements OnInit {
     return minETA == 0 ? "Now" : minETA.toString();
   }
 
+  navigateWithState(index): void {
+    this.router.navigateByUrl (
+      '/data-entry', {state: {
+        type: this.departures[index].type,
+        stopName: this.departures[index].stopName,
+        number: this.departures[index].number,
+        name: this.departures[index].name,
+        direction: this.departures[index].direction
+      }}
+    )
+  }
 }
