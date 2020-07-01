@@ -27,21 +27,23 @@
     <div class="row no-bottom-margin" style="height: 40vh;">
       <div class="col s12 m12 l12 no-margin">
         <ul class="collection no-top-margin" *ngIf="loaded">
-          <li class="collection-item avatar" *ngFor="let departure of departures">
-            <div class="row no-bottom-margin">
-              <div class="col s9 m10 l10">
-                <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
-                <span class="title no-wrap">{{departure.number}} </span><span>{{departure.stopName.length > 25 ? departure.stopName.substring(0,25) + "..." : departure.stopName}}</span>
-                <p class="description-font">{{departure.direction}}
-                  <br>
-                  {{departure.type}} departing in <span class="time-text">{{getETA(departure.departureTime)}} min</span>
-                </p>
+          <li class="collection-item avatar" *ngFor="let departure of departures; let i = index">
+            <a (click)="navigateWithState(i)">
+              <div class="row no-bottom-margin">
+                <div class="col s9 m10 l10">
+                  <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
+                  <span class="title no-wrap">{{departure.number}} </span><span>{{departure.stopName.length > 25 ? departure.stopName.substring(0,25) + "..." : departure.stopName}}</span>
+                  <p class="description-font">{{departure.direction}}
+                    <br>
+                    {{departure.type}} departing in <span class="time-text">{{getETA(departure.departureTime)}} min</span>
+                  </p>
+                </div>
+                <div class="col s3 m2 l2 no-margin center">
+                  <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
+                  <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
+                </div>
               </div>
-              <div class="col s3 m2 l2 no-margin center">
-                <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
-                <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
-              </div>
-            </div>
+            </a>
           </li>
         </ul>
       </div>
