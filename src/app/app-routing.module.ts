@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'data-entry', component: DataEntryComponent },
   { path: 'search', component: SearchComponent }
+  
 ];
 
 @NgModule({
