@@ -72,6 +72,7 @@ ul.collection {
 .list-header {
     //background-color: #e57373;
     color: black;
+    margin-top: 60px;
 }
 
 .list-preload {
@@ -87,4 +88,13 @@ ul.collection {
 .time-text {
     font-weight: bold;
     color: green;
+}
+
+.mode-dropdown {
+    margin-top: 60px;
+}
+
+p {
+    margin-top: 50px;
+    text-align: center;
 }
