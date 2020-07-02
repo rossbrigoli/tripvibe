@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NearbyService } from '../../services/nearby.service';
 import { Observable } from 'rxjs';
+import { variable } from '@angular/compiler/src/output/output_ast';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,15 +18,7 @@ export class NearbyComponent implements OnInit {
   loaded = false;
 
   ngOnInit(): void {
-    this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
-      data.subscribe((deps) => {
-        console.log(deps);
-        this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
-        this.loaded = true;
-      } );
-    } );
-
-    this.now = new Date();
+    this.refresh();
   }
 
   getTypeIcon(type : string) {
@@ -51,27 +45,37 @@ export class NearbyComponent implements OnInit {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
-        this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
+
+        var items = deps.map(d => {
+          return { departure: d, vibe: 50, capacity: 50 }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
+        });
+
+        //console.log(items);
+
+        this.departures = items.sort((a, b) => new Date(a.departure.departure_time).valueOf() - new Date(b.departure.departure_time).valueOf());
         this.loaded = true;
+
+        //console.log(this.departures);
       } );
     } );
-    this.now = new Date();2
+  
+    this.now = new Date();
   }
 
   getETA(depTime: string) : string {
     let eta : number = new Date(depTime).valueOf() - this.now.valueOf();
     let minETA = Math.ceil(eta / 1000 / 60);
-    return minETA == 0 ? "Now" : minETA.toString();
+    return minETA <= 0 ? " Now" : minETA.toString() + " min";
   }
 
   navigateWithState(index): void {
     this.router.navigateByUrl (
       '/data-entry', {state: {
-        type: this.departures[index].type,
-        stopName: this.departures[index].stopName,
-        number: this.departures[index].number,
-        name: this.departures[index].name,
-        direction: this.departures[index].direction
+        type: this.departures[index].departure.route_type,
+        stopName: this.departures[index].departure.stop_name,
+        number: this.departures[index].departure.route_number,
+        name: this.departures[index].departure.route_name,
+        direction: this.departures[index].departure.direction
       }}
     )
   }
