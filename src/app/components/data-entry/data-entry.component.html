@@ -27,19 +27,19 @@
         <div *ngIf="autoFill; else noFill">
             <div class="row">
                 <label>Mode of Transport</label>
-                <input type="text" [(ngModel)]="state.route_type" readonly>
+                <input type="text" [(ngModel)]="route_type" readonly>
             </div>
             <div class="row">
                 <label>Nearby Stop / Station</label>
-                <input type="text" [(ngModel)]="state.stop_name" readonly>
+                <input type="text" [(ngModel)]="stop_name" readonly>
             </div>
             <div class="row">
                 <label>Bus Number / Tram Number</label>
-                <input type="text" [(ngModel)]="state.route_number" readonly>
+                <input type="text" [(ngModel)]="route_number" readonly>
             </div>
             <div class="row">
                 <label>Direction</label>
-                <input type="text" [(ngModel)]="state.direction" readonly>
+                <input type="text" [(ngModel)]="route_direction" readonly>
             </div>
         </div>
         <ng-template #noFill>
@@ -132,10 +132,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div style="margin-left: 38px;" class="col s3 move-right">
+                    <div style="margin-left: 37px;" class="col s3 move-right">
                         <label>Stressed</label>
                     </div>
-                    <div class="col s3 push-s5 move-right">
+                    <div style="margin-left: 26px;" class="col s3 push-s4 move-right">
                         <label>Ok</label>
                     </div>
                 </div>
