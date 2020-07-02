@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NearbyService } from '../../services/nearby.service';
+import { SearchService } from '../../services/search.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private nearbyService : NearbyService, public router: Router) { }
+  constructor(private searchService : SearchService, public router: Router) { }
 
   departures = [];
   loaded = true;
+  routeType : number;
+  search_term : string;
 
   ngOnInit(): void {
-    //this.refresh();
+
   }
 
   getTypeIcon(type : string) {
@@ -38,14 +40,14 @@ export class SearchComponent implements OnInit {
   }
 
   now = new Date();
-  refresh(){
+  search(){
     this.loaded = false;
-    this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
+    this.searchService.searchDepartures(this.search_term, this.routeType).then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
 
         var items = deps.map(d => {
-          return { departure: d, vibe: 50, capacity: 50 }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
+          return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
         });
 
         //console.log(items);

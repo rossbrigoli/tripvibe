@@ -70,9 +70,8 @@ ul.collection {
 }
 
 .list-header {
-    //background-color: #e57373;
-    color: black;
-    margin-top: 60px;
+    background-color: #e57373;
+    color: white;
 }
 
 .list-preload {
@@ -90,11 +89,6 @@ ul.collection {
     color: green;
 }
 
-.mode-dropdown {
-    margin-top: 60px;
-}
-
-p {
-    margin-top: 50px;
-    text-align: center;
+a {
+    color: inherit;
 }

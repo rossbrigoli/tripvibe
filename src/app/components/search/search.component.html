@@ -1,44 +1,44 @@
 <div class="row">
-  <div class="col s8 m8 l8 push-s2 push-m2 push-l2">
-      <p>Please choose a mode of transport and the stop or route you would like to search for</p>
+  <div class="col s12 m12 l12 center">
+      <h4>search</h4>
   </div>
 </div>
 <div class="row no-bottom-margin valign-wrapper" style="height: 15vh;">
   <div class="container">
     <div class="row">
       <label>Mode of Transport</label>
-      <select class="browser-default">
-        <option value="Train">Train</option>
-        <option value="Tram">Tram</option>
-        <option value="Bus">Bus</option>
-        <option value="Vline">Vline</option>
-        <option value="Night Bus">Night Bus</option>
+      <select class="browser-default" [(ngModel)]="routeType">
+        <option value="0">Train</option>
+        <option value="1">Tram</option>
+        <option value="2">Bus</option>
+        <option value="3">Vline</option>
+        <option value="4">Night Bus</option>
       </select>
     </div>
     <div class="col s10 m10 l10">
-      <input type="text" placeholder="Search Stops or Routes" />
+      <input type="text" placeholder="Stop or Station name" [(ngModel)]="search_term" />
     </div>
     <div class="col s2 m2 l2 center">
-      <a class="waves-effect light-green darken-2 btn z-depth-2 center"><i class="material-icons">search</i></a>
+      <a class="waves-effect light-green darken-2 btn z-depth-2 center" (click)="search()"><i class="material-icons">search</i></a>
     </div>
   </div>
 </div>
-<!-- results -->
+
+<br>
+
 <div class="row no-bottom-margin">
   <div class="col s12 m12 l12">
     <div class="container center middle list-preload" *ngIf="!loaded">
       <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-green-only">
+          <div class="spinner-layer spinner-green-only">
           <div class="circle-clipper left">
-            <div class="circle"></div>
+              <div class="circle"></div>
+          </div><div class="gap-patch">
+              <div class="circle"></div>
+          </div><div class="circle-clipper right">
+              <div class="circle"></div>
           </div>
-          <div class="gap-patch">
-            <div class="circle"></div>
           </div>
-          <div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -46,28 +46,19 @@
 <div class="row no-bottom-margin" style="height: 40vh;">
   <div class="col s12 m12 l12 no-margin">
     <ul class="collection no-top-margin" *ngIf="loaded">
-      <li class="collection-item avatar" *ngFor="let departure of departures">
-        <div class="row no-bottom-margin">
-          <div class="col s9 m10 l10">
-            <i class="material-icons circle transport_mode_icon"
-              [ngClass]="getTypeColor(departure.type)">{{ getTypeIcon(departure.type) }}</i>
-            <span class="title no-wrap">{{ departure.number }} </span><span>{{
-              departure.stopName.length > 25
-                ? departure.stopName.substring(0, 25) + "..."
-                : departure.stopName
-            }}</span>
-            <p class="description-font">
-              {{ departure.direction }}
-              <br />
-              {{ departure.type }} departing in
-              <span class="time-text">{{ getETA(departure.departureTime) }} min</span>
-            </p>
+      <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
+        <a (click)="navigateWithState(i)">
+          <div class="row no-bottom-margin">
+            <div class="col s12 m12 l12">
+              <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>
+              <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 25 ? item.departure.stop_name.substring(0,23) + "..." : item.departure.stop_name}}</span>
+              <p class="description-font">{{item.departure.direction}}
+                <br>
+                {{item.departure.route_type}} | <span class="time-text">{{getETA(item.departure.departure_time)}}</span>
+              </p>
+            </div>
           </div>
-          <div class="col s3 m2 l2 no-margin center">
-            <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
-            <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
-          </div>
-        </div>
+        </a>
       </li>
     </ul>
   </div>
