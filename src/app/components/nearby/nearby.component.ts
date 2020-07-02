@@ -71,11 +71,11 @@ export class NearbyComponent implements OnInit {
   navigateWithState(index): void {
     this.router.navigateByUrl (
       '/data-entry', {state: {
-        type: this.departures[index].type,
-        stopName: this.departures[index].stopName,
-        number: this.departures[index].number,
-        name: this.departures[index].name,
-        direction: this.departures[index].direction
+        type: this.departures[index].departure.route_type,
+        stopName: this.departures[index].departure.stop_name,
+        number: this.departures[index].departure.route_number,
+        name: this.departures[index].departure.route_name,
+        direction: this.departures[index].departure.direction
       }}
     )
   }

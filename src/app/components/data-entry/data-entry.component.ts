@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { GeolocationService } from '../../services/geolocation.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { getuid } from 'process';
+import { Guid } from "guid-typescript";
 
 @Component({
   selector: 'app-data-entry',
@@ -13,24 +15,35 @@ import { Router } from '@angular/router';
 })
 export class DataEntryComponent implements OnInit {
 
-  constructor(private nearbyService : NearbyService, private dataEntryService : DataEntryService, private geoService : GeolocationService, private _loc :Location, private router: Router ) { }
+  private deviceId : Guid;
+
+  constructor(private nearbyService : NearbyService, private dataEntryService : DataEntryService, 
+    private geoService : GeolocationService, private _loc :Location, private router: Router ) {
+
+      //only do this if you cannot find device id from the browser's local storage
+      this.deviceId = Guid.create();
+  }
 
   departures = [];
   state; 
   autoFill;
  
   ngOnInit(): void {
-    this.refreshData();
+    
     this.state = window.history.state;
     
+    console.log(this.state);
+
     if (this.state.navigationId !== 1) {
       this.autoFill = true;
-      this.route_type = this.state.type
-      this.stop_name = this.state.stopName
-      this.route_number = this.state.number
-      this.route_direction = this.state.direction
+      this.route_type = this.state.type;
+      this.stop_name = this.state.stopName;
+      this.route_number = this.state.number;
+      this.route_direction = this.state.direction;
+      this.loaded =true;
     } else {
       this.autoFill = false;
+      this.refreshData();
     }
   }
 
@@ -39,7 +52,7 @@ export class DataEntryComponent implements OnInit {
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
-        this.departures = deps.sort((a, b) => new Date(a.departureTime).valueOf() - new Date(b.departureTime).valueOf());
+        this.departures = deps;
         this.refreshStopNames();
         this.refreshRouteNames();
         this.refreshDirectionNames();
@@ -75,7 +88,7 @@ export class DataEntryComponent implements OnInit {
               departure_time: new Date()
             },
             submitter: {
-              device_id: "8316080933289526961"
+              device_id: this.deviceId
             }
           }
         ).then(result => {
@@ -85,7 +98,7 @@ export class DataEntryComponent implements OnInit {
           console.log("Failed" + err);
           this.submitStatusMessage = "Failed";
         }).finally(() => {
-          setTimeout(() => this._loc.back(), 1500);
+          setTimeout(() => this._loc.back(), 200);
         })
       });
   }
@@ -101,8 +114,8 @@ export class DataEntryComponent implements OnInit {
   refreshStopNames() {
     //Don't display tram tops when user selects Bus as mode of transport
     this.stopNames = this.departures
-      .filter(dep => dep.type === this.route_type) //filter by selected route type
-      .map(c => c.stopName)
+      .filter(dep => dep.route_type === this.route_type) //filter by selected route type
+      .map(c => c.stop_name)
       .filter((thing, i, arr) => arr.findIndex(t => t === thing) === i); //get distinct values
     if (this.stopNames.length === 0) this.stopNames.push("No " + this.route_type + " in your location.");
   }
@@ -110,16 +123,17 @@ export class DataEntryComponent implements OnInit {
   refreshRouteNames() {
     //Show only tram lines if user selects tram as mode of transport but also show only route using that selected stop
     this.routeNames = this.departures
-      .filter(dep => dep.type === this.route_type && dep.stopName === this.stop_name) //filter by selected route type and stop name
-      .filter((thing, i, arr) => arr.findIndex(t => t.name === thing.name) == i) //filter distinct value
-      .map(c => [0, c.number, c.name ]);
+      .filter(dep => dep.route_type === this.route_type && dep.stop_name === this.stop_name) //filter by selected route type and stop name
+      .filter((thing, i, arr) => arr.findIndex(t => t.route_name === thing.route_name) == i) //filter distinct value
+      .map(c => {return {number: c.route_number, name: c.route_name }});
 
-    if (this.routeNames.length === 0) this.routeNames.push([0, "Oops", "No routes in your location."]);
+      console.log(this.routeNames);
+    if (this.routeNames.length === 0) this.routeNames.push({number: "Oops", name: "No routes in your location."});
   }
 
   refreshDirectionNames() {
     this.direction_names = this.departures
-    .filter(dep => dep.type === this.route_type && dep.stopName === this.stop_name && dep.name === this.route_name) //filter by selected route type and stop name
+    .filter(dep => dep.route_type === this.route_type && dep.stop_name === this.stop_name && dep.route_name === this.route_name) //filter by selected route type and stop name
     .map(c => c.direction)
     .filter((thing, i, arr) => arr.findIndex(t => t === thing) == i);
 
@@ -148,8 +162,8 @@ export class DataEntryComponent implements OnInit {
 
   submitStatusMessage = "";
   stopNames : string[] = [];
-  routeNames : [number, string, string][] = []
-  direction_names : string[]
+  routeNames : any[] = [];
+  direction_names : string[];
 
   /*
 {

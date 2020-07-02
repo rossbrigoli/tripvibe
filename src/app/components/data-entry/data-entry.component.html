@@ -27,15 +27,15 @@
         <div *ngIf="autoFill; else noFill">
             <div class="row">
                 <label>Mode of Transport</label>
-                <input type="text" [(ngModel)]="state.type" readonly>
+                <input type="text" [(ngModel)]="state.route_type" readonly>
             </div>
             <div class="row">
                 <label>Nearby Stop / Station</label>
-                <input type="text" [(ngModel)]="state.stopName" readonly>
+                <input type="text" [(ngModel)]="state.stop_name" readonly>
             </div>
             <div class="row">
                 <label>Bus Number / Tram Number</label>
-                <input type="text" [(ngModel)]="state.number" readonly>
+                <input type="text" [(ngModel)]="state.route_number" readonly>
             </div>
             <div class="row">
                 <label>Direction</label>
@@ -61,11 +61,11 @@
                 </select>
             </div>
             <div class="row">
-                <label>Bus Number / Tram Number</label>
+                <label>Bus Number / Tram Number / Train Line</label>
                 <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
                     <option value="" disabled selected>Choose your option</option>
-                    <ng-container *ngFor="let name of routeNames">
-                            <option [value]="name[2]">{{ name[1].toString() === "" ? name[2] : name[1] + " - " + name[2] }}</option>
+                    <ng-container *ngFor="let item of routeNames">
+                            <option [value]="item.name">{{ item.number === "" ? item.name : item.number + " - " + item.name }}</option>
                     </ng-container>
                 </select>
             </div>
