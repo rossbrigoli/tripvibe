@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  nearbyApiURL: "/api/search/routes/{latlong}/200",
+  nearbyApiURL: "/api/nearby-departures/{latlong}/200?nextHours=1",
   dataEntryApiURL: "/submission",
   overrideLocation: true
 };

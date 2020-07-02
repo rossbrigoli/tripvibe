@@ -21,13 +21,13 @@
           <div class="container center middle list-preload" *ngIf="!loaded">
             <div class="preloader-wrapper big active">
                 <div class="spinner-layer spinner-green-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
                 </div>
             </div>
           </div>
@@ -36,21 +36,23 @@
       <div class="row no-bottom-margin" style="height: 40vh;">
         <div class="col s12 m12 l12 no-margin">
           <ul class="collection no-top-margin" *ngIf="loaded">
-            <li class="collection-item avatar" *ngFor="let departure of departures">
-              <div class="row no-bottom-margin">
-                <div class="col s9 m10 l10">
-                  <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(departure.type)">{{getTypeIcon(departure.type)}}</i>
-                  <span class="title no-wrap">{{departure.number}} </span><span>{{departure.stopName.length > 25 ? departure.stopName.substring(0,25) + "..." : departure.stopName}}</span>
-                  <p class="description-font">{{departure.direction}}
-                    <br>
-                    {{departure.type}} departing in <span class="time-text">{{getETA(departure.departureTime)}} min</span>
-                  </p>
+            <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
+              <a (click)="navigateWithState(i)">
+                <div class="row no-bottom-margin">
+                  <div class="col s9 m10 l10">
+                    <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>
+                    <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 25 ? item.departure.stop_name.substring(0,23) + "..." : item.departure.stop_name}}</span>
+                    <p class="description-font">{{item.departure.direction}}
+                      <br>
+                      {{item.departure.route_type}} | <span class="time-text">{{getETA(item.departure.departure_time)}}</span>
+                    </p>
+                  </div>
+                  <div class="col s3 m2 l2 no-margin center">
+                    <app-vibe-indicator [sentiment]="item.vibe"></app-vibe-indicator>
+                    <app-crowdedness-indicator [capacity]="item.capacity"></app-crowdedness-indicator>
+                  </div>
                 </div>
-                <div class="col s3 m2 l2 no-margin center">
-                  <app-vibe-indicator [sentiment]="departure.vibe"></app-vibe-indicator>
-                  <app-crowdedness-indicator [capacity]="departure.capacity"></app-crowdedness-indicator>
-                </div>
-              </div>
+              </a>
             </li>
           </ul>
         </div>
