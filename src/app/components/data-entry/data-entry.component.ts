@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { getuid } from 'process';
 import { Guid } from "guid-typescript";
+declare var $: any;
 
 @Component({
   selector: 'app-data-entry',
@@ -14,6 +15,7 @@ import { Guid } from "guid-typescript";
   styleUrls: ['./data-entry.component.scss']
 })
 export class DataEntryComponent implements OnInit {
+
 
   private deviceId : Guid;
 
@@ -94,11 +96,13 @@ export class DataEntryComponent implements OnInit {
         ).then(result => {
           result.subscribe(c => console.log(c));
           this.submitStatusMessage = "Success";
+          this.showFeedback();
         }).catch( err => {
           console.log("Failed" + err);
           this.submitStatusMessage = "Failed";
+          this.showFeedback();
         }).finally(() => {
-          setTimeout(() => this._loc.back(), 200);
+          setTimeout(() => this._loc.back(), 10000);
         })
       });
   }
@@ -165,6 +169,13 @@ export class DataEntryComponent implements OnInit {
   routeNames : any[] = [];
   direction_names : string[];
 
+  showFeedback() {
+    //initialize all modals           
+    $('.modal').modal();
+
+    //now you can open modal from code
+    $('#modal1').modal('open');
+  }
   /*
 {
   "location_lat": -27.502,

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col s12 m12 l12 center">
-      <h4>search</h4>
+      <h5>find trips</h5>
   </div>
 </div>
 <div class="row no-bottom-margin valign-wrapper" style="height: 15vh;">
@@ -43,7 +43,7 @@
     </div>
   </div>
 </div>
-<div class="row no-bottom-margin" style="height: 40vh;">
+<div class="row no-bottom-margin" style="height: '100%'';">
   <div class="col s12 m12 l12 no-margin">
     <ul class="collection no-top-margin" *ngIf="loaded">
       <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
@@ -51,7 +51,7 @@
           <div class="row no-bottom-margin">
             <div class="col s12 m12 l12">
               <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>
-              <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 35 ? item.departure.stop_name.substring(0,33) + "..." : item.departure.stop_name}}</span>
+              <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 45 ? item.departure.stop_name.substring(0,42) + "..." : item.departure.stop_name}}</span>
               <p class="description-font">To {{item.departure.direction}}
                 <br>
                 {{item.departure.route_type}} | <span class="time-text">{{getETA(item.departure.departure_time)}}</span>
