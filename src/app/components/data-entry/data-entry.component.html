@@ -34,8 +34,8 @@
                 <input type="text" [(ngModel)]="stop_name" readonly>
             </div>
             <div class="row">
-                <label>Bus Number / Tram Number</label>
-                <input type="text" [(ngModel)]="route_number" readonly>
+                <label>Bus / Tram / Train Line</label>
+                <input type="text" [(ngModel)]="route_number" value={{route_number === "" ? route_name : route_number + " - " + route_name}}readonly>
             </div>
             <div class="row">
                 <label>Direction</label>
