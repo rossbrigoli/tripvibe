@@ -33,7 +33,7 @@
                 <div class="col s9 m10 l10">
                   <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>
                   <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 25 ? item.departure.stop_name.substring(0,23) + "..." : item.departure.stop_name}}</span>
-                  <p class="description-font">{{item.departure.direction}}
+                  <p class="description-font">To {{item.departure.direction}}
                     <br>
                     {{item.departure.route_type}} | <span class="time-text">{{getETA(item.departure.departure_time)}}</span>
                   </p>
