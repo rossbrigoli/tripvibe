@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
 
   departures = [];
   loaded = true;
+  resultEmpty = false;
   routeType : number;
   search_term : string;
 
@@ -42,9 +43,17 @@ export class SearchComponent implements OnInit {
   now = new Date();
   search(){
     this.loaded = false;
+    this.resultEmpty = false;
+    
     this.searchService.searchDepartures(this.search_term, this.routeType).then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
+
+        if (deps == undefined || deps.length === 0) {
+          this.resultEmpty = true;
+          this.loaded = true;
+          return;
+        }
 
         var items = deps.map(d => {
           return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL

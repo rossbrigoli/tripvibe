@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <label>Bus / Tram / Train Line</label>
-                <input type="text" [(ngModel)]="route_number" value={{route_number === "" ? route_name : route_number + " - " + route_name}}readonly>
+                <input type="text" [(ngModel)]="route_number_name" readonly>
             </div>
             <div class="row">
                 <label>Direction</label>
@@ -61,7 +61,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>Bus Number / Tram Number / Train Line</label>
+                <label>Bus / Tram / Train Line</label>
                 <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
                     <option value="" disabled selected>Choose your option</option>
                     <ng-container *ngFor="let item of routeNames">

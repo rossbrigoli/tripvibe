@@ -44,7 +44,6 @@ export class NearbyComponent implements OnInit {
     this.loaded = false;
     this.nearbyService.getDeparturesNearby().then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
-        console.log(deps);
 
         var items = deps.map(d => {
           return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
@@ -55,7 +54,7 @@ export class NearbyComponent implements OnInit {
         this.departures = items.sort((a, b) => new Date(a.departure.departure_time).valueOf() - new Date(b.departure.departure_time).valueOf());
         this.loaded = true;
 
-        //console.log(this.departures);
+        console.log(this.departures);
       } );
     } );
   

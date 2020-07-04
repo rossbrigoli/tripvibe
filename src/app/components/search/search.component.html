@@ -43,9 +43,16 @@
     </div>
   </div>
 </div>
-<div class="row no-bottom-margin" style="height: '100%'';">
+<div class="row no-bottom-margin">
+  <div class="col s12 m12 l12">
+    <div class="container center middle list-preload" *ngIf="loaded && resultEmpty">
+      <p>No trips found!</p>
+    </div>
+  </div>
+</div>
+<div class="row no-bottom-margin" style="height: '100%'';" *ngIf="loaded && !resultEmpty">
   <div class="col s12 m12 l12 no-margin">
-    <ul class="collection no-top-margin" *ngIf="loaded">
+    <ul class="collection no-top-margin" >
       <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
         <a (click)="navigateWithState(i)">
           <div class="row no-bottom-margin">

@@ -42,6 +42,8 @@ export class DataEntryComponent implements OnInit {
       this.stop_name = this.state.stopName;
       this.route_number = this.state.number;
       this.route_direction = this.state.direction;
+      this.route_name = this.state.name;
+      this.route_number_name = this.route_number + " - " + this.route_name;
       this.loaded =true;
     } else {
       this.autoFill = false;
@@ -114,6 +116,7 @@ export class DataEntryComponent implements OnInit {
   stop_name: string;
   vibe: number;
   route_name: string;
+  route_number_name: string;
 
   refreshStopNames() {
     //Don't display tram tops when user selects Bus as mode of transport
