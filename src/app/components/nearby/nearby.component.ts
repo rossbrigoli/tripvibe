@@ -52,6 +52,7 @@ export class NearbyComponent implements OnInit {
         //console.log(items);
 
         this.departures = items.sort((a, b) => new Date(a.departure.departure_time).valueOf() - new Date(b.departure.departure_time).valueOf());
+        //.filter(c => c.departure.route_number==="216");
         this.loaded = true;
 
         console.log(this.departures);
@@ -65,6 +66,7 @@ export class NearbyComponent implements OnInit {
     let eta : number = new Date(depTime).valueOf() - this.now.valueOf();
     let minETA = Math.ceil(eta / 1000 / 60);
     return minETA <= 0 ? " Now" : minETA.toString() + " min";
+    //return minETA + " min";
   }
 
   navigateWithState(index): void {

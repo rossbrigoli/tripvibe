@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "@types/materialize-css": "^1.0.8",
     "guid-typescript": "^1.0.9",
     "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",

@@ -15,7 +15,6 @@ import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicat
 import { DataEntryComponent } from './components/data-entry/data-entry.component';
 import { SearchComponent } from './components/search/search.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,4 +41,7 @@ export class AppModule { }
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
+  
+  var selectElems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(selectElems);
 });

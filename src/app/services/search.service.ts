@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GeolocationService } from './geolocation.service';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,7 +9,7 @@ export class SearchService {
 
   private REST_API_SERVER = environment.searchApiURL;
 
-  constructor(private httpClient: HttpClient, private geoService : GeolocationService) { }
+  constructor(private httpClient: HttpClient) { }
 
   public async searchDepartures(term : string, routeTypeNumber: number) : Promise<any> {
 

@@ -1,8 +1,6 @@
 <div class="row">
-    <div class="col s8 m8 l8 push-s2 push-m2 push-l2">
-        <p class="title">
-            Help make public transport better by providing the following information.
-        </p>
+    <div class="col s12 m12 l12 center">
+        <h6>Tell us about the trip!</h6>
     </div>
 </div>
 <div class="row no-bottom-margin" *ngIf="!loaded">
@@ -30,59 +28,66 @@
                 <input type="text" [(ngModel)]="route_type" readonly>
             </div>
             <div class="row">
-                <label>Nearby Stop / Station</label>
-                <input type="text" [(ngModel)]="stop_name" readonly>
-            </div>
-            <div class="row">
-                <label>Bus / Tram / Train Line</label>
+                <label>Route</label>
                 <input type="text" [(ngModel)]="route_number_name" readonly>
             </div>
             <div class="row">
                 <label>Direction</label>
                 <input type="text" [(ngModel)]="route_direction" readonly>
             </div>
+            <div class="row">
+                <label>Next Stop / Station</label>
+                <input type="text" [(ngModel)]="stop_name" readonly>
+            </div>
         </div>
         <ng-template #noFill>
             <div class="row">
-                <label>Mode of Transport</label>
-                <select class="browser-default" [(ngModel)]="route_type" (change)="onRouteTypeChange()">
-                    <option value="Train">Train</option>
-                    <option value="Tram">Tram</option>
-                    <option value="Bus">Bus</option>
-                    <option value="Vline">Vline</option>
-                    <option value="Night Bus">Night Bus</option>
-                </select>
+                <div class="col s12">
+                    <label>Mode of Transport</label>
+                    <select class="browser-default" [(ngModel)]="route_type" (change)="onRouteTypeChange()">
+                        <option value="Train">Train</option>
+                        <option value="Tram">Tram</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Vline">Vline</option>
+                        <option value="Night Bus">Night Bus</option>
+                    </select>
+                </div>
             </div>
             <div class="row">
-                <label>Nearby Stop / Station</label>
-                <select class="browser-default" [(ngModel)]="stop_name" (change)="onStopChange()">
-                    <option value="" disabled selected>Choose your option</option>
-                    <option *ngFor="let stop of stopNames" [value]="stop">{{ stop }}</option>
-                </select>
+                <div class="col s12">
+                    <label>Route</label>
+                    <select class="browser-default" [(ngModel)]="selected_route" (change)="onRouteChange()">
+                        <option *ngFor="let route of routes" [ngValue]="route">{{ route.route_number === "" ? route.route_name : route.route_number + " - " + route.route_name }}</option>
+                    </select>
+                </div>
             </div>
             <div class="row">
-                <label>Bus / Tram / Train Line</label>
-                <select class="browser-default" [(ngModel)]="route_name" (change)="onRouteChange()">
-                    <option value="" disabled selected>Choose your option</option>
-                    <ng-container *ngFor="let item of routeNames">
-                            <option [value]="item.name">{{ item.number === "" ? item.name : item.number + " - " + item.name }}</option>
-                    </ng-container>
-                </select>
+                <div class="col s12">
+                    <label>Direction / Head sign</label>
+                    <select class="browser-default" [(ngModel)]="selected_direction" (change)="onDirectionChange()">
+                        <ng-container *ngFor="let direction of directions">
+                                <option [ngValue]="direction">To {{ direction.direction_name }}</option>
+                        </ng-container>
+                    </select>
+                </div>
             </div>
             <div class="row">
-                <label>Direction</label>
-                <select class="browser-default" [(ngModel)]="route_direction">
-                    <option value="" disabled selected>Choose your option</option>
-                    <ng-container *ngFor="let name of direction_names">
-                            <option [value]="name">{{ name }}</option>
-                    </ng-container>
-                </select>
+                <div class="col s12">
+                    <label>Current Stop or Station</label>
+                    <select class="browser-default" [(ngModel)]="selected_stop" (change)="onStopChange()">
+                        <optgroup label="Nearby stops">
+                            <option *ngFor="let stop of stops" [ngValue]="stop">{{ stop.stop_name }}</option>
+                        </optgroup>
+                        <optgroup label="Other stops">
+                            <option *ngFor="let stop of otherStops" [ngValue]="stop">{{ stop.stop_name }}</option>
+                        </optgroup>
+                    </select>
+                </div>
             </div>
         </ng-template>
         <div class="row">
             <div class="col s12">
                 <label>How crowded is it?</label>
-                <br>
                 <br>
                 <div class="row move-right">
                     <div class="col s4">
@@ -109,7 +114,6 @@
         <div class="row">
             <div class="col s12">
                 <label>How's the vibe?</label>
-                <br>
                 <br>
                 <div class="row move-right" style="margin-bottom: -5px;">
                     <div class="col s4">
@@ -143,12 +147,12 @@
         </div>
         <div class="row">
             <div class="col s6">
-                <button class="btn waves-effect waves-light" name="action" (click)="onBack()">Back
-                    <i class="material-icons right"></i>
+                <button class="btn waves-effect waves-light left" style="width: 130px;" name="action" (click)="onBack()"> Back  
+                    <i class="material-icons left">arrow_back</i>
                 </button>
             </div>
-            <div class="col s6 push-s1">
-                <button class="btn waves-effect waves-light" type="submit" name="action" (click)="onSubmit()">Submit
+            <div class="col s6">
+                <button class="btn waves-effect waves-light right" style="width: 130px;" type="submit" name="action" (click)="onSubmit()">Submit
                     <i class="material-icons right">send</i>
                 </button>
             </div>
@@ -167,3 +171,4 @@
           </div>
     </div>
 </div>
+
