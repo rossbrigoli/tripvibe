@@ -17,9 +17,10 @@ export class SearchComponent implements OnInit {
   resultEmpty = false;
   routeType : number;
   search_term : string;
+  includeRecentTrips: number;
 
   ngOnInit(): void {
-
+    this.includeRecentTrips = 0;
   }
 
   getTypeIcon(type : string) {
@@ -45,7 +46,9 @@ export class SearchComponent implements OnInit {
     this.loaded = false;
     this.resultEmpty = false;
     
-    this.searchService.searchDepartures(this.search_term, this.routeType).then((data: Observable<any[]>) => {
+    //console.log("recent trips? " + this.includeRecentTrips)
+
+    this.searchService.searchDepartures(this.search_term, this.routeType, this.includeRecentTrips*60).then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
         console.log(deps);
 
@@ -71,10 +74,15 @@ export class SearchComponent implements OnInit {
     this.now = new Date();
   }
 
-  getETA(depTime: string) : string {
+  getETA(depTime: string) : number {
     let eta : number = new Date(depTime).valueOf() - this.now.valueOf();
     let minETA = Math.ceil(eta / 1000 / 60);
-    return minETA <= 0 ? " Now" : minETA.toString() + " min";
+    return minETA;
+  }
+
+  getETAText(depTime: string) : string {
+    let minETA = this.getETA(depTime);
+    return minETA < 0 ? Math.abs(minETA).toString() + " min ago" : (minETA == 0 ? "Now" : minETA.toString() + " min");
   }
 
   navigateWithState(index): void {

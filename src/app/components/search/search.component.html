@@ -15,6 +15,14 @@
         <option value="4">Night Bus</option>
       </select>
     </div>
+
+    <div class="row">
+      <label>Include recent past trips?</label>
+      <select class="browser-default" [(ngModel)]="includeRecentTrips">
+        <option value="0">No</option>
+        <option value="15">Yes</option>
+      </select>
+    </div>
     <div class="col s10 m10 l10">
       <input type="text" placeholder="Stop or Station name" [(ngModel)]="search_term" />
     </div>
@@ -61,7 +69,7 @@
               <span class="title no-wrap">{{item.departure.route_number}} </span><span>{{item.departure.stop_name.length > 45 ? item.departure.stop_name.substring(0,42) + "..." : item.departure.stop_name}}</span>
               <p class="description-font">To {{item.departure.direction}}
                 <br>
-                {{item.departure.route_type}} | <span class="time-text">{{getETA(item.departure.departure_time)}}</span>
+                {{item.departure.route_type}} | <span [ngClass]="(getETA(item.departure.departure_time)<0)?'time-past-text':'time-text'">{{getETAText(item.departure.departure_time)}}</span>
               </p>
             </div>
           </div>

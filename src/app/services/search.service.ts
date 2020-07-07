@@ -11,11 +11,16 @@ export class SearchService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public async searchDepartures(term : string, routeTypeNumber: number) : Promise<any> {
+  public async searchDepartures(term : string, routeTypeNumber: number, pastSeconds: number) : Promise<any> {
 
     let response = null;
 
-    response = this.httpClient.get(this.REST_API_SERVER.replace("{term}", term).replace("{routeType}", routeTypeNumber.toString()));
+    response = this.httpClient.get(
+      this.REST_API_SERVER
+        .replace("{term}", term)
+        .replace("{routeType}", routeTypeNumber.toString())
+        .replace("{pastSeconds}", (pastSeconds)?pastSeconds.toString():"0") 
+      );
 
     return response;
   }
