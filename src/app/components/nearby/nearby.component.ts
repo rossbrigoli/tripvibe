@@ -46,7 +46,7 @@ export class NearbyComponent implements OnInit {
       data.subscribe((deps) => {
 
         var items = deps.map(d => {
-          return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
+          return { departure: d, vibe: d.vibe, capacity: d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
         });
 
         //console.log(items);
@@ -71,15 +71,9 @@ export class NearbyComponent implements OnInit {
     //return minETA + " min";
   }
 
-  navigateWithState(index): void {
+  navigateWithState(item): void {
     this.router.navigateByUrl (
-      '/data-entry', {state: {
-        type: this.departures[index].departure.route_type,
-        stopName: this.departures[index].departure.stop_name,
-        number: this.departures[index].departure.route_number,
-        name: this.departures[index].departure.route_name,
-        direction: this.departures[index].departure.direction
-      }}
+      '/data-entry', {state: item.departure}
     )
   }
 }

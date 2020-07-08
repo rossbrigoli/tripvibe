@@ -22,6 +22,10 @@ export class VibeIndicatorComponent implements OnInit {
 
     this.vibe = Math.ceil(this.sentiment / 20);
 
+    if (this.sentiment === -1) {
+      return;
+    }
+
     if (this.sentiment < 20) {
       this.iconName = "sentiment_very_dissatisfied";
       this.color = "darkred";
