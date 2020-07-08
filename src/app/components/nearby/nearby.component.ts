@@ -46,7 +46,7 @@ export class NearbyComponent implements OnInit {
       data.subscribe((deps) => {
 
         var items = deps.map(d => {
-          return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
+          return { departure: d, vibe: d.vibe, capacity: d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
         });
 
         //console.log(items);
