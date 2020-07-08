@@ -13,7 +13,7 @@
         <a class="waves-effect lightgray btn z-depth-2 center" (click)="search()"><i class="material-icons">search</i></a>
       </div>
     </div>
-    <div class="row">
+    <div class="row no-bottom-margin">
       <div class="col s6 m6 l6">
         <label>Mode of Transport</label>
         <select class="browser-default" [(ngModel)]="routeType">
@@ -29,10 +29,13 @@
       <div class="switch">
         <label>Include Recent Trips</label> 
         <br>
+        <div class="style=padding: 20px">
         <label>Off
           <input type="checkbox" [(ngModel)]="enablePastTrips">
           <span class="lever"></span>
-        </label>On
+          On
+        </label>
+      </div>
       </div>
       </div>
     </div>
