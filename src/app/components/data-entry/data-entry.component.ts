@@ -28,9 +28,12 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
 
   constructor(private nearbyService : NearbyService, private dataEntryService : DataEntryService, 
     private geoService : GeolocationService, private _loc :Location, private router: Router, private stopsService : StopsService ) {
-
-      //only do this if you cannot find device id from the browser's local storage
-      this.deviceId = Guid.create();
+      let deviceId = localStorage.getItem('DEVICE_ID');
+      if (!deviceId) {
+        deviceId = Guid.create();
+        localStorage.setItem('DEVICE_ID', deviceId);
+      } 
+      this.deviceId = deviceId;
   }
 
   departures : Departure[] = [];
