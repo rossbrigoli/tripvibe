@@ -57,7 +57,9 @@ export class NearbyComponent implements OnInit {
 
         console.log(this.departures);
       } );
-    } );
+    } ).catch((error) => {
+      this.router.navigateByUrl("/search");
+    });
   
     this.now = new Date();
   }

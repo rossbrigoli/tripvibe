@@ -18,6 +18,8 @@ export class NearbyService {
     let lng = 144.9524854;
     let response = null;
 
+    console.log("requesting geo location...");
+
     let position = await this.geoService.getPosition()
       .then(pos => {
         lat = pos.lat; lng = pos.lng;
@@ -38,6 +40,7 @@ export class NearbyService {
         response = this.httpClient.get(query);
       });
 
+    console.log("response = " + response)
     console.log("Overriden Location: " + lat + "," + lng);    
 
     return response;
