@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col s12 m12 l12 center">
-      <h5>find trips</h5>
+      <h5>Search Trips</h5>
   </div>
 </div>
 <div class="row no-bottom-margin valign-wrapper" style="height: 15vh;">
@@ -60,7 +60,7 @@
 </div>
 <div class="row no-bottom-margin" style="height: '100%'';" *ngIf="loaded && !resultEmpty">
   <div class="col s12 m12 l12 no-margin">
-    <ul class="collection no-top-margin" >
+    <ul class="collection no-top-margin">
       <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
         <a (click)="navigateWithState(i)">
           <div class="row no-bottom-margin">
