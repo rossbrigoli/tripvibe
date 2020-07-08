@@ -85,7 +85,11 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
         this.refreshStopNames();
         this.loaded = true;
       } );
-    } );
+    } ).catch(()=>{
+      console.log("error retrieving geo location");
+      this.loaded = true;
+      this.router.navigateByUrl("/search");
+    });
   }
 
   generateSubmission() : Submission {
@@ -141,20 +145,19 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
     let submission = this.generateSubmission();
 
     console.log (submission);
+    // TODO: set lat/long
+    //submission.location_lat
+    //submission.location_lng
 
-      this.geoService.getPosition().then(pos => {
-        this.dataEntryService.postData(submission)
-        .then(result => {
-          result.subscribe(c => console.log(c));
-          this.submitStatusMessage = "Success";
-          this.showFeedback();
-        }).catch( err => {
-          console.log("Failed" + err);
-          this.submitStatusMessage = "Failed";
-          this.showFeedback();
-        }).finally(() => {
-          //setTimeout(() => this._loc.back(), 10000);
-        })
+    this.dataEntryService.postData(submission)
+      .then(result => {
+        result.subscribe(c => console.log(c));
+        this.submitStatusMessage = "Success";
+        this.showFeedback();
+      }).catch( err => {
+        console.log("Failed" + err);
+        this.submitStatusMessage = "Failed";
+        this.showFeedback();
       });
   }
 
@@ -199,10 +202,11 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
       this.stopsService.getStopsByRoute(this.selected_route.route_id, this.getRouteTypeNumber(this.selected_route.route_type))
        .then((response : Observable<any>) => 
          response.subscribe(c => {
-           console.log(c.stops);
-           let oStops : Stop[] = c.stops;
+          console.log(c.stops);
+          let oStops : Stop[] = c.stops;
 
-           if (this.geoService.isGeoLocationEnabled) {
+          if (this.geoService.isGeoLocationEnabled) {
+            console.log("geo service is enabled");
             this.geoService.getPosition().then(pos => {
               oStops.forEach(stp => stp.stop_distance = this.getEuclideanDistance([stp.stop_latitude, stp.stop_longitude],[pos.lat, pos.lng]));
             });
