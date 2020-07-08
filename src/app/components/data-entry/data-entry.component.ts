@@ -33,10 +33,10 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
     private geoService : GeolocationService, private _loc :Location, private router: Router, private stopsService : StopsService ) {
       let deviceId = localStorage.getItem('DEVICE_ID');
       if (!deviceId) {
-        deviceId = Guid.create();
-        localStorage.setItem('DEVICE_ID', deviceId);
+        this.deviceId = Guid.create();
+        localStorage.setItem('DEVICE_ID', this.deviceId.toString());
       } 
-      this.deviceId = deviceId;
+      this.deviceId = Guid.parse(deviceId);
   }
 
   departures : Departure[] = [];
