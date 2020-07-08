@@ -12,6 +12,9 @@ import { XRoute } from 'src/app/models/xroute.model';
 import { Direction } from 'src/app/models/direction.model';
 import { StopsService } from 'src/app/services/stops.service';
 import * as M  from 'materialize-css';
+import { Submission } from 'src/app/models/submission.model';
+import { Sentiment } from 'src/app/models/sentiment.model';
+import { Submitter } from 'src/app/models/submitter.model';
 
 
 declare var $: any;
@@ -88,37 +91,63 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
     } );
   }
 
-  onSubmit() {
-    console.log (
-      { 
-        capacity: this.capacity, 
-        route_direction: this.route_direction, 
-        route_number: this.route_number, 
-        route_type: this.route_type,
-        stop_name: this.stop_name,
-        vibe: this.vibe
-      });
+  generateSubmission() : Submission {
+    //find the departure that matches to the user's selections
+    let matchingDepartures = this.departures.filter(c =>
+      c.route_type === this.selected_route.route_type &&
+      c.route_id === this.selected_route.route_id &&
+      c.direction_id === this.selected_direction.direction_id &&
+      c.stop_id === this.selected_stop.stop_id);
 
-      let location : any;
+    let match :Departure;
+
+    console.log(matchingDepartures);
+
+    //If multiple matches, pickup the one with the closest departure time
+    if (matchingDepartures.length === 1) {
+      match = matchingDepartures[0];
+    } else {
+      match = matchingDepartures.sort((a, b) => a.departure_time.valueOf() - b.departure_time.valueOf())[0];
+    }
+
+    let sentiment = new Sentiment();
+
+    console.log(match);
+
+    sentiment.at_platform = match.at_platform;
+    sentiment.departure_time = match.departure_time;
+    sentiment.direction = match.direction;
+    sentiment.direction_id = match.direction_id;
+    sentiment.platform_number = match.platform_number;
+    sentiment.route_id = match.route_id;
+    sentiment.route_number = match.route_number;
+    sentiment.route_type = this.getRouteTypeNumber(match.route_type);
+    sentiment.run_id = match.run_id;
+    sentiment.stop_id = match.stop_id;
+    sentiment.stop_name = match.stop_name;
+    sentiment.vibe = this.vibe;
+    sentiment.capacity = this.capacity;
+
+    let submitter = new Submitter();
+    submitter.device_id = this.deviceId.toString()
+
+    console.log(submitter);
+
+    let submission = new Submission()
+    submission.sentiment = sentiment;
+    submission.submitter = submitter;
+
+    return submission;
+  }
+
+  onSubmit() {
+    let submission = this.generateSubmission();
+
+    console.log (submission);
+
       this.geoService.getPosition().then(pos => {
-        this.dataEntryService.postData(
-          {
-            location_lat: pos.lat,
-            location_lng: pos.lng,
-            sentiment: {
-              capacity: this.capacity, 
-              route_direction: this.route_direction, 
-              route_number: this.route_number, 
-              route_type: this.route_type,
-              stop_name: this.stop_name,
-              vibe: this.vibe,
-              departure_time: new Date()
-            },
-            submitter: {
-              device_id: this.deviceId
-            }
-          }
-        ).then(result => {
+        this.dataEntryService.postData(submission)
+        .then(result => {
           result.subscribe(c => console.log(c));
           this.submitStatusMessage = "Success";
           this.showFeedback();
@@ -127,7 +156,7 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
           this.submitStatusMessage = "Failed";
           this.showFeedback();
         }).finally(() => {
-          setTimeout(() => this._loc.back(), 10000);
+          //setTimeout(() => this._loc.back(), 10000);
         })
       });
   }
@@ -231,10 +260,6 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
   
   onStopChange() {
     console.log(this.selected_stop.stop_id);
-    //this.refreshRouteNames();
-    //this.refreshDirectionNames();
-
-    //figure out the actual departure here
   }
 
   onRouteChange(){
@@ -262,24 +287,6 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
     //now you can open modal from code
     $('#modal1').modal('open');
   }
-  /*
-{
-  "location_lat": -27.502,
-  "location_lng": 152.897,
-  "sentiment": {
-    "capacity": 50,
-    "route_direction": "City",
-    "route_number": "216",
-    "route_type": "Bus",
-    "stop_name": "Sunshine Station - City via Dynon Rd",
-    "vibe": 67,
-    "departure_time": "2020-06-23T05:27:24.000Z"
-  },
-  "submitter": {
-    "device_id": "8316080933289526961"
-  }
-}
-  */
   
   private getRouteTypeNumber(routeType: string) : number {
     switch (routeType) {

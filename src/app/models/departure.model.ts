@@ -11,5 +11,5 @@ export class Departure {
     public stop_id : number;
     public stop_name : string;
     public estimated_departure_time : Date;
-    public platform_number: number;
+    public platform_number: string;
 }

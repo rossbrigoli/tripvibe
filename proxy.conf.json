@@ -8,7 +8,7 @@
       "changeOrigin": true
     },
     "/submission" : {
-      "target" : "https://sc-submit-labs-dev.apps.r2r.vic.apac.rht-labs.com/submission",
+      "target" : "https://tv-submit-labs-dev.apps.r2r.vic.apac.rht-labs.com/submission",
       "secure": true,
       "pathRewrite": {
       "^/submission": ""
