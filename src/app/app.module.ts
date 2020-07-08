@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicator.component';
 import { DataEntryComponent } from './components/data-entry/data-entry.component';
 import { SearchComponent } from './components/search/search.component';
+import { AltSearchComponent } from './components/alt-search/alt-search.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SearchComponent } from './components/search/search.component';
     CrowdednessIndicatorComponent,
     VibeIndicatorComponent,
     DataEntryComponent,
-    SearchComponent
+    SearchComponent,
+    AltSearchComponent
   ],
   imports: [
     BrowserModule,

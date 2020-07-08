@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col s12 m12 l12 center">
+    <h5>Search Trips</h5>
+  </div>
+</div>
+<div class="row no-bottom-margin valign-wrapper" style="height: 15vh;">
+  <div class="container">
+    <div class="row">
+      <div class="col s10 m10 l10">
+        <input type="text" placeholder="Stop or Station name" [(ngModel)]="search_term" />
+      </div>
+      <div class="col s2 m2 l2 center">
+        <a class="waves-effect lightgray btn z-depth-2 center" (click)="search()"><i
+            class="material-icons">search</i></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <label>Mode of Transport</label>
+        <br>
+        <div class="row move-right" style="margin-bottom: -5px;">
+          <div class="col s2 push-s1">
+            <label>
+              <input type="radio" name="vibe" value="0" [(ngModel)]="routeType">
+              <i class="material-icons circle transport_mode_icon transport" style="background: purple;">directions_transit</i>
+            </label>
+          </div>
+          <div class="col s2 push-s1">
+            <label>
+              <input type="radio" name="vibe" value="1" [(ngModel)]="routeType">
+              <i class="material-icons circle transport_mode_icon transport" style="background: green;">tram</i>
+            </label>
+          </div>
+          <div class="col s2 push-s1">
+            <label>
+              <input type="radio" name="vibe" value="2" [(ngModel)]="routeType">
+              <i class="material-icons circle transport_mode_icon transport" style="background: orange;">directions_bus</i>
+            </label>
+          </div>
+          <div class="col s2 push-s1">
+            <label>
+              <input type="radio" name="vibe" value="4" [(ngModel)]="routeType">
+              <i class="material-icons circle transport_mode_icon transport" style="background: red;">directions_bus</i>
+            </label>
+          </div>
+          <div class="col s2 push-s1">
+            <label>
+              <input type="radio" name="vibe" value="3" [(ngModel)]="routeType">
+              <i class="material-icons circle transport_mode_icon transport" style="background: blue;">directions_transit</i>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row no-bottom-margin">
+      <div class="switch">
+        <label>Include Recent Trips</label>
+        <br>
+        <div class="style=padding: 20px">
+          <label>Off
+            <input type="checkbox" [(ngModel)]="enablePastTrips">
+            <span class="lever"></span>
+            On
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row no-bottom-margin">
+  <div class="col s12 m12 l12">
+    <div class="container center middle list-preload" *ngIf="!loaded">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row no-bottom-margin">
+  <div class="col s12 m12 l12">
+    <div class="container center middle list-preload" *ngIf="loaded && resultEmpty">
+      <p>No trips found!</p>
+    </div>
+  </div>
+</div>
+<div class="row no-bottom-margin" style="height: '100%'';" *ngIf="loaded && !resultEmpty">
+  <div class="col s12 m12 l12 no-margin">
+    <ul class="collection no-top-margin">
+      <li class="collection-item avatar" *ngFor="let item of departures">
+        <a (click)="navigateWithState(item)">
+          <div class="row no-bottom-margin">
+            <div class="col s12 m12 l12">
+              <i class="material-icons circle transport_mode_icon"
+                [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>
+              <span class="title no-wrap">{{item.departure.route_number}}
+              </span><span>{{item.departure.stop_name.length > 45 ? item.departure.stop_name.substring(0,42) + "..." : item.departure.stop_name}}</span>
+              <p class="description-font">To {{item.departure.direction}}
+                <br>
+                {{item.departure.route_type}} | <span
+                  [ngClass]="(getETA(item.departure.departure_time)<0)?'time-past-text':'time-text'">{{getETAText(item.departure.departure_time)}}</span>
+              </p>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
