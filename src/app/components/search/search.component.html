@@ -39,8 +39,6 @@
   </div>
 </div>
 
-<br>
-
 <div class="row no-bottom-margin">
   <div class="col s12 m12 l12">
     <div class="container center middle list-preload" *ngIf="!loaded">
@@ -68,8 +66,8 @@
 <div class="row no-bottom-margin" style="height: '100%'';" *ngIf="loaded && !resultEmpty">
   <div class="col s12 m12 l12 no-margin">
     <ul class="collection no-top-margin">
-      <li class="collection-item avatar" *ngFor="let item of departures; let i = index">
-        <a (click)="navigateWithState(i)">
+      <li class="collection-item avatar" *ngFor="let item of departures">
+        <a (click)="navigateWithState(item)">
           <div class="row no-bottom-margin">
             <div class="col s12 m12 l12">
               <i class="material-icons circle transport_mode_icon" [ngClass]="getTypeColor(item.departure.route_type)">{{getTypeIcon(item.departure.route_type)}}</i>

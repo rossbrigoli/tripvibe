@@ -16,7 +16,7 @@ export class VibeIndicatorComponent implements OnInit {
 
   iconName = "sentiment_neutral";
   vibe = 3;
-  color = "darkslategray";
+  color = "lightgray";
 
   ngOnInit(): void {
 
