@@ -58,12 +58,9 @@
 ul.collection {
     max-height: 500px;
     overflow: scroll;
+    margin-top: 50px;
 }
 
-// li.collection-item:first-child {
-//   background-color: #e57373;
-//   color: white;
-// }
 .icon-big-white {
     color: whitesmoke;
     font-size: 24px;
@@ -96,4 +93,8 @@ ul.collection {
 
 a {
     color: inherit;
+}
+
+h5 {
+    margin-bottom:30px;
 }
