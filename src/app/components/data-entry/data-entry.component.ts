@@ -51,6 +51,8 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
   directions : Direction[];
   otherStops : Stop[] = [];
 
+  selected_departure : Departure;
+
   ngOnInit(): void {
     
     this.state = window.history.state;
@@ -59,12 +61,14 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
 
     if (this.state.navigationId !== 1) {
       this.autoFill = true;
-      this.route_type = this.state.type;
-      this.stop_name = this.state.stopName;
-      this.route_number = this.state.number;
-      this.route_direction = this.state.direction;
-      this.route_name = this.state.name;
-      this.route_number_name = this.route_number + " - " + this.route_name;
+      this.selected_departure = this.state;
+      this.route_type = this.selected_departure.route_type;
+      this.route_number_name = 
+        this.selected_departure.route_number === "" 
+        ? this.selected_departure.route_name 
+        : this.selected_departure.route_number + " - " + this.selected_departure.route_name;
+      this.route_direction = this.selected_departure.direction;
+      this.stop_name = this.selected_departure.stop_name;
       this.loaded =true;
     } else {
       this.autoFill = false;
@@ -92,22 +96,28 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
   }
 
   generateSubmission() : Submission {
-    //find the departure that matches to the user's selections
-    let matchingDepartures = this.departures.filter(c =>
-      c.route_type === this.selected_route.route_type &&
-      c.route_id === this.selected_route.route_id &&
-      c.direction_id === this.selected_direction.direction_id &&
-      c.stop_id === this.selected_stop.stop_id);
 
     let match :Departure;
+    if(!this.autoFill) {
+      //find the departure that matches to the user's selections
+      let matchingDepartures = this.departures.filter(c =>
+        c.route_type === this.selected_route.route_type &&
+        c.route_id === this.selected_route.route_id &&
+        c.direction_id === this.selected_direction.direction_id &&
+        c.stop_id === this.selected_stop.stop_id);
 
-    console.log(matchingDepartures);
 
-    //If multiple matches, pickup the one with the closest departure time
-    if (matchingDepartures.length === 1) {
-      match = matchingDepartures[0];
+
+      console.log(matchingDepartures);
+
+      //If multiple matches, pickup the one with the closest departure time
+      if (matchingDepartures.length === 1) {
+        match = matchingDepartures[0];
+      } else {
+        match = matchingDepartures.sort((a, b) => a.departure_time.valueOf() - b.departure_time.valueOf())[0];
+      }
     } else {
-      match = matchingDepartures.sort((a, b) => a.departure_time.valueOf() - b.departure_time.valueOf())[0];
+      match = this.selected_departure;
     }
 
     let sentiment = new Sentiment();
