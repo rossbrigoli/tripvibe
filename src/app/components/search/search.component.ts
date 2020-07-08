@@ -85,15 +85,9 @@ export class SearchComponent implements OnInit {
     return minETA < 0 ? Math.abs(minETA).toString() + " min ago" : (minETA == 0 ? "Now" : minETA.toString() + " min");
   }
 
-  navigateWithState(index): void {
+  navigateWithState(item): void {
     this.router.navigateByUrl (
-      '/data-entry', {state: {
-        type: this.departures[index].departure.route_type,
-        stopName: this.departures[index].departure.stop_name,
-        number: this.departures[index].departure.route_number,
-        name: this.departures[index].departure.route_name,
-        direction: this.departures[index].departure.direction
-      }}
+      '/data-entry', {state: item.departure}
     )
   }
 
