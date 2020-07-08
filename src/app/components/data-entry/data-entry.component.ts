@@ -110,8 +110,6 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
         c.direction_id === this.selected_direction.direction_id &&
         c.stop_id === this.selected_stop.stop_id);
 
-
-
       console.log(matchingDepartures);
 
       //If multiple matches, pickup the one with the closest departure time
@@ -230,6 +228,10 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
             //.sort((a,b) => a.stop_id - b.stop_id);
          }));
    }
+  }
+
+  searchForDepartures(stop : Stop) {
+
   }
 
   getEuclideanDistance(p : [number, number], q: [number, number]) {

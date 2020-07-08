@@ -6,28 +6,35 @@
 <div class="row no-bottom-margin valign-wrapper" style="height: 15vh;">
   <div class="container">
     <div class="row">
-      <label>Mode of Transport</label>
-      <select class="browser-default" [(ngModel)]="routeType">
-        <option value="0">Train</option>
-        <option value="1">Tram</option>
-        <option value="2">Bus</option>
-        <option value="3">Vline</option>
-        <option value="4">Night Bus</option>
-      </select>
+      <div class="col s10 m10 l10">
+        <input type="text" placeholder="Stop or Station name" [(ngModel)]="search_term" />
+      </div>
+      <div class="col s2 m2 l2 center">
+        <a class="waves-effect lightgray btn z-depth-2 center" (click)="search()"><i class="material-icons">search</i></a>
+      </div>
     </div>
-
     <div class="row">
-      <label>Include recent past trips?</label>
-      <select class="browser-default" [(ngModel)]="includeRecentTrips">
-        <option value="0">No</option>
-        <option value="15">Yes</option>
-      </select>
-    </div>
-    <div class="col s10 m10 l10">
-      <input type="text" placeholder="Stop or Station name" [(ngModel)]="search_term" />
-    </div>
-    <div class="col s2 m2 l2 center">
-      <a class="waves-effect light-green darken-2 btn z-depth-2 center" (click)="search()"><i class="material-icons">search</i></a>
+      <div class="col s6 m6 l6">
+        <label>Mode of Transport</label>
+        <select class="browser-default" [(ngModel)]="routeType">
+          <option value="0">Train</option>
+          <option value="1">Tram</option>
+          <option value="2">Bus</option>
+          <option value="3">Vline</option>
+          <option value="4">Night Bus</option>
+        </select>
+      </div>
+      <div class="col s6 m6 l6">
+        <!-- Switch -->
+      <div class="switch">
+        <label>Include Recent Trips</label> 
+        <br>
+        <label>Off
+          <input type="checkbox" [(ngModel)]="enablePastTrips">
+          <span class="lever"></span>
+        </label>On
+      </div>
+      </div>
     </div>
   </div>
 </div>

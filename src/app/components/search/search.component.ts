@@ -15,12 +15,14 @@ export class SearchComponent implements OnInit {
   departures = [];
   loaded = true;
   resultEmpty = false;
-  routeType : number;
+  routeType : number = 2;
   search_term : string;
   includeRecentTrips: number;
 
+  enablePastTrips : boolean = true;
+
   ngOnInit(): void {
-    this.includeRecentTrips = 0;
+    this.includeRecentTrips = 15;
   }
 
   getTypeIcon(type : string) {
@@ -47,6 +49,11 @@ export class SearchComponent implements OnInit {
     this.resultEmpty = false;
     
     //console.log("recent trips? " + this.includeRecentTrips)
+    if (this.enablePastTrips) {
+      this.includeRecentTrips = 15;
+    }
+
+    this.includeRecentTrips = 1;
 
     this.searchService.searchDepartures(this.search_term, this.routeType, this.includeRecentTrips*60).then((data: Observable<any[]>) => {
       data.subscribe((deps) => {
