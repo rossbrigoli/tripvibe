@@ -305,12 +305,12 @@ export class DataEntryComponent implements OnInit, AfterViewInit {
   }
   
   private getRouteTypeNumber(routeType: string) : number {
-    switch (routeType) {
-      case "Train": return 0
-      case "Tram" : return 1
-      case "Bus" : return 2
-      case "Vline" : return 3
-      case "Night Bus" : return 4
+    switch (routeType.toLowerCase()) {
+      case "train": return 0
+      case "tram" : return 1
+      case "bus" : return 2
+      case "vline" : return 3
+      case "night bus" : return 4
       default: { throw new Error("Unknown route type.")}
     }
   }
