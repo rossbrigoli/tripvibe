@@ -13,10 +13,10 @@ export class NearbyService {
   constructor(private httpClient: HttpClient, private geoService : GeolocationService) { }
 
 
-  private BOUNDARY_WEST = 144.5099263;
-  private BOUNDARY_EAST = 145.9765603;
-  private BOUNDARY_NORTH = -37.3698897;
-  private BOUNDARY_SOUTH = -38.4983352;
+  private BOUNDARY_WEST = 140.9615313;
+  private BOUNDARY_EAST = 149.9733643;
+  private BOUNDARY_NORTH = -33.9808125;
+  private BOUNDARY_SOUTH = -39.1335518;
   private DEFAULT_LAT = -37.7287417;
   private DEFAULT_LONG = 144.9113903;
 
@@ -33,7 +33,7 @@ export class NearbyService {
         lat = pos.lat; lng = pos.lng;
         console.log("Current Location: " + lat + "," + lng);    
         
-        // if current location outside Greater Melbourne boundaries, set default
+        // if current location outside Victoria boundaries, set default
         if (lat < this.BOUNDARY_SOUTH || lat > this.BOUNDARY_NORTH || lng < this.BOUNDARY_WEST || lng > this.BOUNDARY_EAST) {
           lat = this.DEFAULT_LAT;
           lng = this.DEFAULT_LONG;
@@ -76,7 +76,7 @@ export class NearbyService {
         lat = pos.lat; lng = pos.lng;
         console.log("Actual Location: " + lat + "," + lng);    
         
-        // if current location outside Greater Melbourne boundaries, set default
+        // if current location outside Victoria boundaries, set default
         if (lat < this.BOUNDARY_SOUTH || lat > this.BOUNDARY_NORTH || lng < this.BOUNDARY_WEST || lng > this.BOUNDARY_EAST) {
           lat = this.DEFAULT_LAT;
           lng = this.DEFAULT_LONG;
