@@ -71,6 +71,10 @@ export class NearbyComponent implements OnInit {
     //return minETA + " min";
   }
 
+  goToSearch() : void {
+    this.router.navigateByUrl("/search");
+  }
+
   navigateWithState(item): void {
     this.router.navigateByUrl (
       '/data-entry', {state: item.departure}

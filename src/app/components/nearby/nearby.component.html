@@ -45,6 +45,16 @@
               </div>
             </a>
           </li>
+          <li class="collection-item" *ngIf="departures.length==0">
+            <div class="row no-bottom-margin">
+              <div class="col s12 m12 l12">
+                <span class="no-wrap left description-font">No transport options nearby </span>
+                <button class="btn waves-effect waves-light right" style="width: 130px;" name="action" (click)="goToSearch()"> Search 
+                    <i class="material-icons right">search</i>
+                </button>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
