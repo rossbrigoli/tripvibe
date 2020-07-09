@@ -15,6 +15,7 @@ import { VibeIndicatorComponent } from './components/vibe-indicator/vibe-indicat
 import { DataEntryComponent } from './components/data-entry/data-entry.component';
 import { SearchComponent } from './components/search/search.component';
 import { AltSearchComponent } from './components/alt-search/alt-search.component';
+import { AltDataEntryComponent } from './components/alt-data-entry/alt-data-entry.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AltSearchComponent } from './components/alt-search/alt-search.component
     VibeIndicatorComponent,
     DataEntryComponent,
     SearchComponent,
-    AltSearchComponent
+    AltSearchComponent,
+    AltDataEntryComponent
   ],
   imports: [
     BrowserModule,
