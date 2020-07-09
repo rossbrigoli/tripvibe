@@ -15,12 +15,13 @@ export class SearchService {
 
     let response = null;
 
-    response = this.httpClient.get(
-      this.REST_API_SERVER
-        .replace("{term}", term)
-        .replace("{routeType}", routeTypeNumber.toString())
-        .replace("{pastSeconds}", (pastSeconds)?pastSeconds.toString():"0") 
-      );
+    let searchURI = this.REST_API_SERVER
+      .replace("{term}", term)
+      .replace("{routeType}", routeTypeNumber.toString())
+      .replace("{pastSeconds}", (pastSeconds)?pastSeconds.toString():"0");
+    console.log(searchURI);
+
+    response = this.httpClient.get(searchURI);
 
     return response;
   }
