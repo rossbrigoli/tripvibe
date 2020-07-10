@@ -95,7 +95,7 @@ spec:
       - tripvibe
       from:
         kind: ImageStreamTag
-        name: sc-routes:latest
+        name: tripvibe:latest
       lastTriggeredImage: quay.io/eformat/tripvibe:latest
     type: ImageChange
 ---
