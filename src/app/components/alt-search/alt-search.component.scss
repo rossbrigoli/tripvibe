@@ -104,6 +104,10 @@ h5 {
     padding: 5px;
 }
 
-[type=radio]:checked + i {
+svg {
+    margin-right: 10px;
+}
+
+[type=radio]:checked + svg {
     border: 2px solid #26a69a;
   }
