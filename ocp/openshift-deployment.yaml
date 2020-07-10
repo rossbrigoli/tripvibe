@@ -5,7 +5,7 @@ metadata:
     app: tripvibe
     app.kubernetes.io/component: sc-routes
     app.kubernetes.io/instance: sc-routes
-  name: sc-routes
+  name: tripvibe
 spec:
   lookupPolicy:
     local: false
