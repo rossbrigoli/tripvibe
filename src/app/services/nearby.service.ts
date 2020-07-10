@@ -91,7 +91,7 @@ export class NearbyService {
 
         let query = this.REST_API_SERVER
         .replace("{latlong}", lat + "," + lng)
-        .replace("{distance}", "1000")
+        .replace("{distance}", "300")
         .replace("{nextSeconds}", "900")
         .replace("{pastSeconds}", "600");
 
