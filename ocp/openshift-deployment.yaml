@@ -1,0 +1,168 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: tripvibe
+    app.kubernetes.io/component: sc-routes
+    app.kubernetes.io/instance: sc-routes
+  name: sc-routes
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations:
+        openshift.io/imported-from: quay.io/eformat/tripvibe:latest
+      from:
+        kind: DockerImage
+        name: quay.io/eformat/tripvibe:latest
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tripvibe
+    app.kubernetes.io/component: tripvibe
+    app.kubernetes.io/instance: tripvibe
+  name: tripvibe
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deploymentconfig: tripvibe
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    app.kubernetes.io/part-of: tripvibe
+    app.openshift.io/connects-to: sc-submit,sc-routes,tv-submit
+  labels:
+    app: tripvibe
+    app.kubernetes.io/component: tripvibe
+    app.kubernetes.io/instance: tripvibe
+    app.kubernetes.io/part-of: tripvibe
+  name: tripvibe
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: tripvibe
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        deploymentconfig: tripvibe
+    spec:
+      containers:
+      - image: ' '
+        imagePullPolicy: Always
+        name: tripvibe
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - tripvibe
+      from:
+        kind: ImageStreamTag
+        name: sc-routes:latest
+      lastTriggeredImage: quay.io/eformat/tripvibe:latest
+    type: ImageChange
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/connects-to: sc-routes
+  labels:
+    app: tripvibe-ui
+    app.kubernetes.io/component: tripvibe-ui
+    app.kubernetes.io/instance: tripvibe-ui
+    app.kubernetes.io/part-of: tripvibe
+  name: tripvibe
+spec:
+  port:
+    targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: tripvibe
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/connects-to: infinispan
+  labels:
+    app: tripvibe
+    app.kubernetes.io/component: sc-routes
+    app.kubernetes.io/instance: sc-routes
+    app.kubernetes.io/part-of: tripvibe
+  name: tripvibe-sc-routes
+spec:
+  path: /api
+  port:
+    targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: sc-routes
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: tv-submit
+    app.kubernetes.io/component: tv-submit
+    app.kubernetes.io/instance: tv-submit
+  name: tripvibe-tv-submit
+spec:
+  path: /submission
+  port:
+    targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: tv-submit
+    weight: 100
+  wildcardPolicy: None
