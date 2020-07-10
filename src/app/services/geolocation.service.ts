@@ -21,4 +21,9 @@ export class GeolocationService {
     });
 
   }
+
+  isGeoLocationEnabled() : boolean {
+    if (navigator.geolocation) return true;
+    return false;
+  }
 }

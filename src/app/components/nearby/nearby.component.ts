@@ -46,17 +46,20 @@ export class NearbyComponent implements OnInit {
       data.subscribe((deps) => {
 
         var items = deps.map(d => {
-          return { departure: d, vibe: d.vibe === -1 ? 50 : d.vibe, capacity: d.capacity === -1 ? 50 : d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
+          return { departure: d, vibe: d.vibe, capacity: d.capacity }; // TODO: REPLACE THIS WITH REAL CAPACITY and VIBE API CALL
         });
 
         //console.log(items);
 
         this.departures = items.sort((a, b) => new Date(a.departure.departure_time).valueOf() - new Date(b.departure.departure_time).valueOf());
+        //.filter(c => c.departure.route_number==="216");
         this.loaded = true;
 
         console.log(this.departures);
       } );
-    } );
+    } ).catch(() => {
+      this.router.navigateByUrl("/search");
+    });
   
     this.now = new Date();
   }
@@ -65,17 +68,16 @@ export class NearbyComponent implements OnInit {
     let eta : number = new Date(depTime).valueOf() - this.now.valueOf();
     let minETA = Math.ceil(eta / 1000 / 60);
     return minETA <= 0 ? " Now" : minETA.toString() + " min";
+    //return minETA + " min";
   }
 
-  navigateWithState(index): void {
+  goToSearch() : void {
+    this.router.navigateByUrl("/search");
+  }
+
+  navigateWithState(item): void {
     this.router.navigateByUrl (
-      '/data-entry', {state: {
-        type: this.departures[index].departure.route_type,
-        stopName: this.departures[index].departure.stop_name,
-        number: this.departures[index].departure.route_number,
-        name: this.departures[index].departure.route_name,
-        direction: this.departures[index].departure.direction
-      }}
+      '/data-entry', {state: item.departure}
     )
   }
 }

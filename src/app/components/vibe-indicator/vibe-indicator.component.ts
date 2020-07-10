@@ -16,11 +16,15 @@ export class VibeIndicatorComponent implements OnInit {
 
   iconName = "sentiment_neutral";
   vibe = 3;
-  color = "darkslategray";
+  color = "lightgray";
 
   ngOnInit(): void {
 
     this.vibe = Math.ceil(this.sentiment / 20);
+
+    if (this.sentiment === -1) {
+      return;
+    }
 
     if (this.sentiment < 20) {
       this.iconName = "sentiment_very_dissatisfied";

@@ -58,12 +58,9 @@
 ul.collection {
     max-height: 500px;
     overflow: scroll;
+    margin-top: 50px;
 }
 
-// li.collection-item:first-child {
-//   background-color: #e57373;
-//   color: white;
-// }
 .icon-big-white {
     color: whitesmoke;
     font-size: 24px;
@@ -89,7 +86,24 @@ ul.collection {
     color: green;
 }
 
+.time-past-text {
+    font-weight: bold;
+    color: orange;
+}
+
 a {
     color: inherit;
 }
 
+h5 {
+    margin-bottom:30px;
+}
+
+.transport {
+    color: white;
+    padding: 5px;
+}
+
+[type=radio]:checked + i {
+    border: 2px solid #26a69a;
+  }
