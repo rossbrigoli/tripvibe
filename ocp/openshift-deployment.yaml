@@ -11,7 +11,7 @@ spec:
     local: false
   tags:
     - annotations:
-        openshift.io/imported-from: quay.io/eformat/tripvibe:latest
+        openshift.io/imported-from: quay.io/eformat/tripvibe:1.0
       from:
         kind: DockerImage
         name: quay.io/eformat/tripvibe:latest
@@ -96,7 +96,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: tripvibe:latest
-      lastTriggeredImage: quay.io/eformat/tripvibe:latest
+      lastTriggeredImage: quay.io/eformat/tripvibe:1.0
     type: ImageChange
 ---
 apiVersion: route.openshift.io/v1
