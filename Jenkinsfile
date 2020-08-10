@@ -143,7 +143,7 @@ pipeline {
                        fi
                        oc -n ${TARGET_NAMESPACE} get route ${APP_NAME}-sc-routes || rc=$?
                        if [ $rc -eq 1 ]; then
-                           oc n ${TARGET_NAMESPACE} create route edge tripvibe-sc-routes --service=sc-routes --port=8080 --hostname=$(oc get route ${APP_NAME} -o custom-columns=ROUTE:.spec.host --no-headers) --path=/api
+                           oc -n ${TARGET_NAMESPACE} create route edge tripvibe-sc-routes --service=sc-routes --port=8080 --hostname=$(oc get route ${APP_NAME} -o custom-columns=ROUTE:.spec.host --no-headers) --path=/api
                        fi
                     '''
                 }
