@@ -94,7 +94,7 @@ pipeline {
                 stage("Build App") {
                     agent {
                         node {
-                            label "jenkins-slave-mvn"
+                            label "jenkins-agent-mvn"
                         }
                     }
                     steps {
